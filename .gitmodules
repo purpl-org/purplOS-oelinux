@@ -1,6 +1,3 @@
-[submodule "anki/victor"]
-	path = anki/victor
-	url = https://github.com/os-vector/wire-os-victor
 [submodule "poky/poky"]
 	path = poky/poky
 	url = https://github.com/yoctoproject/poky
@@ -15,3 +12,6 @@
 [submodule "anki/vic-cloudless"]
 	path = anki/vic-cloudless
 	url = https://github.com/kercre123/vic-cloudless
+[submodule "anki/victor"]
+	path = anki/victor
+	url = https://github.com/purpl-org/purplOS
