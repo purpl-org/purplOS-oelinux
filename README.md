@@ -1,16 +1,12 @@
-# wire-os
+# purplOS-oelinux
 
-The main repo for WireOS.
-
-WireOS serves as a nice, stable, and maintained base for Vector CFW.
-
-This builds the OS, the /anki programs (`victor`), and creates a final OTA. This repo can be thought of as `wire-os-oelinux`.
+This builds the OS, the /anki programs (`purplOS`), and creates a final OTA. 
 
 ## Submodules
 
 - /poky/poky -> [yoctoproject/poky](https://github.com/yoctoproject/poky) (walnascar)
 - /poky/meta-openembedded -> [openembedded/meta-openembedded](https://github.com/openembedded/meta-openembedded) (walnascar)
-- /anki/victor -> [wire-os-victor](https://github.com/os-vector/wire-os-victor) (main)
+- /anki/victor -> [purplOS-oelinux-victor](https://github.com/purpl-org/purplOS) (main)
 - /anki/wired -> [wired](https://github.com/os-vector/wired) (main)
 
 ## Update notes:
@@ -40,8 +36,8 @@ sudo chmod 660 /var/run/docker.sock
 3. Clone and build:
 
 ```
-git clone https://github.com/os-vector/wire-os --recurse-submodules
-cd wire-os
+git clone https://github.com/purpl-org/purplOS-oelinux --recurse-submodules
+cd purplOS-oelinux
 ./build/build.sh -bt <dev/oskr> -bp <boot-passwd> -v <build-increment>
 # boot password not required for dev
 # example: ./build/build.sh -bt dev -v 1
