@@ -16,6 +16,7 @@ This builds the OS, the /anki programs (`purplOS`), and creates a final OTA.
 - **05-24-2025 again**: `./build/clean.sh "ethtool iptables-persistent"`
 - **06-02-2025**: `./build/clean.sh "system-core"`
 - **06-05-2025**: `./build/clean.sh "lvm2 libpam packagegroup-core-base-utils"`
+- **06-08-2025**: `./build/clean.sh "systemd packagegroup-core-boot"`
 
 ## Build
 

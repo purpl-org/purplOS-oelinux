@@ -43,10 +43,13 @@ ROOTFS_POSTPROCESS_COMMAND:append = " gen_buildprop;"
 ROOTFS_POSTPROCESS_COMMAND:append = "${@bb.utils.contains('DISTRO_FEATURES','flashless','create_squashfs_rootimg;','', d)}"
 EXTRA_IMAGE_FEATURES += "${@bb.utils.contains('DISTRO_FEATURES','ro-rootfs','read-only-rootfs','',d)}"
 gen_buildprop() {
-   mkdir -p ${IMAGE_ROOTFS}/cache
+    # i'm very sorry for doing this here
+   install -d -m 0700 -o root -g root ${IMAGE_ROOTFS}/root
+   rm -rf ${IMAGE_ROOTFS}/home/root
+   rm -rf ${IMAGE_ROOTFS}/media ${IMAGE_ROOTFS}/srv
 #   echo ro.build.version.release=`cat ${IMAGE_ROOTFS}/etc/version ` >> ${IMAGE_ROOTFS}/build.prop
 #   echo ro.product.name=${BASEMACHINE}-${DISTRO} >> ${IMAGE_ROOTFS}/build.prop
-   echo ${MACHINE} >> ${IMAGE_ROOTFS}/target
+   echo ${MACHINE} > ${IMAGE_ROOTFS}/target
 }
 
 # Generate ramdisk for sdxpoorwills
