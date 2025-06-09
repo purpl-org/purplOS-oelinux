@@ -218,6 +218,9 @@ function build-prod() {
   build-victor-robot-user-image
 }
 
+# cleared every time
+cleanList=(victor wired vic-cloud core-image-anki-initramfs rampost anki-version machine-robot-image system-conf extra-conf vic-engine update-os update-engine wireutils wlan-opensource base-passwd mm-camera)
+
 function clean-oskr() {
   unset_bb_env
   export MACHINE=apq8009-robot
@@ -226,7 +229,7 @@ function clean-oskr() {
   export PRODUCT=robot
   export OSKR=1
   wire-clean
-  cdbitbake -c cleanall victor wired vic-cloud core-image-anki-initramfs rampost anki-version machine-robot-image system-conf extra-conf vic-engine update-os update-engine wireutils wlan-opensource base-passwd
+  cdbitbake -c cleanall ${cleanList[@]}
 }
 
 function clean-dev() {
@@ -236,7 +239,7 @@ function clean-dev() {
   export VARIANT=perf
   export PRODUCT=robot
   wire-clean
-  cdbitbake -c cleanall victor wired vic-cloud core-image-anki-initramfs rampost anki-version machine-robot-image system-conf extra-conf vic-engine update-os update-engine wireutils wlan-opensource base-passwd
+  cdbitbake -c cleanall ${cleanList[@]}
 }
 
 function clean-devcloudless() {
@@ -247,7 +250,7 @@ function clean-devcloudless() {
   export PRODUCT=robot
   export CLOUDLESS=1
   wire-clean
-  cdbitbake -c cleanall victor wired vic-cloud core-image-anki-initramfs rampost anki-version machine-robot-image system-conf extra-conf vic-engine update-os update-engine vic-cloudless wireutils wlan-opensource base-passwd
+  cdbitbake -c cleanall ${cleanList[@]} vic-cloudless
 }
 
 function clean-prod() {
@@ -257,7 +260,7 @@ function clean-prod() {
   export VARIANT=perf
   export PRODUCT=robot
   wire-clean
-  cdbitbake -c cleanall victor wired vic-cloud core-image-anki-initramfs rampost anki-version machine-robot-image system-conf extra-conf vic-engine update-os update-engine wireutils wlan-opensource base-passwd
+  cdbitbake -c cleanall ${cleanList[@]}
 }
 
 function wire-clean() {
