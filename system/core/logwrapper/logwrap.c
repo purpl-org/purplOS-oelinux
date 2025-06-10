@@ -20,6 +20,7 @@
 #include <poll.h>
 #include <sys/wait.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -31,13 +32,6 @@
 #include "private/android_filesystem_config.h"
 #include "cutils/log.h"
 #include <cutils/klog.h>
-
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE 1       /* make sure the right feature set is on */
-#endif
-#include <stdlib.h>         /* grantpt()/unlockpt()/ptsname_r() */
-#include <pty.h>            /* openpty()/forkpty() – not strictly required */
-
 
 /*
  ** TEMP_FAILURE_RETRY is defined by some, but not all, versions of
@@ -433,10 +427,10 @@ static int parent(const char *tag, int parent_read, pid_t pid,
 
     if (chld_sts != NULL) {
         *chld_sts = status;
-    } else {
-      if (WIFEXITED(status))
+    } 
+    if (WIFEXITED(status)) {
         rc = WEXITSTATUS(status);
-      else
+    }  else {
         rc = -ECHILD;
     }
 
@@ -489,6 +483,16 @@ static void child(int argc, char* argv[]) {
     if (execvp(argv_child[0], argv_child)) {
         FATAL_CHILD("executing %s failed: %s\n", argv_child[0],
                 strerror(errno));
+    }
+}
+
+/* <anki> VIC-1543: Forward SIGTERM to child process </anki> */
+static pid_t child_pid = 0;
+
+static void sigforward(int signum)
+{
+    if (child_pid > 0) {
+        kill(child_pid, signum);
     }
 }
 
@@ -555,6 +559,13 @@ int android_fork_execvp_ext(int argc, char* argv[], int *status, bool ignore_int
 
         child(argc, argv);
     } else {
+        /* <anki> VIC-1543: Forward SIGTERM to child </anki> */
+        child_pid = pid;
+        signal(SIGTERM, sigforward);
+
+        /* <anki> VIC-1609: Ignore SIGHUP caused by child exit </anki> */
+        signal(SIGHUP, SIG_IGN);
+
         close(child_ptty);
         if (ignore_int_quit) {
             struct sigaction ignact;

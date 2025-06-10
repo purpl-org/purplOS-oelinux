@@ -327,7 +327,7 @@ int main(int argc, const char* argv[])
   lcd_device_init(); 
   
   if (error_code || is_dev_unit || is_low_battery || is_too_hot) {
-    //lcd_set_brightness(5);
+    lcd_set_brightness(5);
     //Skip everything else on syscon error!
     if (error_code) {
       show_error(error_code);
@@ -347,12 +347,6 @@ int main(int argc, const char* argv[])
   }
   else {
     cleanup(true);
-  }
-  double delay = 10000.0;
-
-  for (int i = 0; i <= 20; ++i) {
-      lcd_set_brightness(i);
-      usleep((int)delay);
   }
 
   hal_exit();

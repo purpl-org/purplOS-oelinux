@@ -8,7 +8,7 @@
 #        <victor>/tools/build/tools/ankibuild/vicos.py --install $(VICOS_BUILD_TOOL_VER)
 
 
-VICOS_BUILD_TOOL_VER:=4.0.0-r05
+VICOS_BUILD_TOOL_VER:=5.2.1-r06
 
 
 VICOS_ARM_TOOLS_ROOT:=~/.anki/vicos-sdk/dist/$(VICOS_BUILD_TOOL_VER)
