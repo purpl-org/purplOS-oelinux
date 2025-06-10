@@ -110,6 +110,7 @@ fi
 echo "All checks passed. Building."
 
 mkdir -p build/cache
+mkdir -p build/gocache
 
 echo "Getting deps (if needed)..."
 ./build/deps.sh
@@ -176,6 +177,7 @@ docker run -it --rm \
     -v $(pwd)/anki-deps:/home/$USER/.anki \
     -v $(pwd):$(pwd) \
     -v $(pwd)/build/cache:/home/$USER/.ccache \
+    -v $(pwd)/build/gocache:/home/$USER/go \
     vic-yocto-builder-5 bash -c \
     "cd $(pwd)/poky && \
     source build/conf/set_bb_env.sh && \

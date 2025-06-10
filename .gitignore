@@ -4,6 +4,7 @@ _build/
 bb-files.txt
 **.DS_Store
 /build/cache
+/build/gocache
 /vm-deps-installed
 /anki-deps
 /old-toolchain
