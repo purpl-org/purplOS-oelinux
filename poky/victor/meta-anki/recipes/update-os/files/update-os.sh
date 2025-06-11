@@ -73,13 +73,28 @@ chown -R net:anki /run/vic-switchboard
 
 systemctl restart update-engine
 
+echo "Stopping anki-robot.target... (eyes will go dark)"
+systemctl stop anki-robot.target
+
+echo "Upping CPU+RAM frequencies..."
+echo 1267200 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+echo disabled > /sys/kernel/debug/msm_otg/bus_voting  # This prevents USB from pinning RAM to 400MHz
+echo 0 > /sys/kernel/debug/msm-bus-dbg/shell-client/update_request
+echo 1 > /sys/kernel/debug/msm-bus-dbg/shell-client/mas
+echo 512 > /sys/kernel/debug/msm-bus-dbg/shell-client/slv
+echo 0 > /sys/kernel/debug/msm-bus-dbg/shell-client/ab
+echo active clk2 0 1 max 800000 > /sys/kernel/debug/rpm_send_msg/message # Max RAM freq in KHz = 400MHz
+echo 1 > /sys/kernel/debug/msm-bus-dbg/shell-client/update_request
+
+echo
+
 echo -e "Downloading OS update from:\n$URL"
 
 echo -e -n "\r."
 DOTS=1
 UPDATE_VERSION=""
 while [[ ! -f /run/update-engine/done ]] ; do
-    sleep 3
+    sleep 1
     if [ -z "${UPDATE_VERSION}" -a -f /run/update-engine/manifest.ini ]; then
 	UPDATE_VERSION=`grep update_version /run/update-engine/manifest.ini | awk -F= '{print $NF;}'`
     fi

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 """
 Reboot the robot, if it is safe to do so, to clear out the cobwebs.
 """
@@ -21,9 +20,9 @@ DEFAULT_TIMEZONE = "/usr/share/zoneinfo/Universal"
 UPDATER_PROCESS = "/anki/bin/update-engine"
 
 earliest = int(os.getenv("REBOOTER_EARLIEST", 1 * 60 * 60))  # 1 AM
-latest = int(os.getenv("REBOOTER_LATEST", 5 * 60 * 60))  # 5 AM
+latest = int(os.getenv("REBOOTER_LATEST", 5 * 60 * 60))      # 5 AM
 minimum_uptime = int(os.getenv("REBOOTER_MINIMUM_UPTIME", 4 * 60 * 60))  # 4 hr
-inhibitor_delay = int(os.getenv("REBOOTER_INHIBITOR_DELAY", 17))  # 17 seconds
+inhibitor_delay = int(os.getenv("REBOOTER_INHIBITOR_DELAY", 17))       # 17 seconds
 verbose_logging = os.getenv("REBOOTER_VERBOSE_LOGGING", False)
 
 
@@ -88,31 +87,35 @@ def processes():
     for pid in pids:
         try:
             with open(os.path.join('/proc', pid, 'cmdline'), 'rb') as f:
-                cmd = f.read()
-                if len(cmd) > 0:
-                    args = cmd.split('\0')
-                    if args[0] in INTERPRETERS and len(args) > 1:
-                        processes.append(args[1])
+                raw = f.read()
+                parts = raw.split(b'\0')
+                if parts and parts[0]:
+                    prog = parts[0].decode('utf-8', 'ignore')
+                    if prog in INTERPRETERS and len(parts) > 1 and parts[1]:
+                        cmd = parts[1].decode('utf-8', 'ignore')
                     else:
-                        processes.append(args[0])
+                        cmd = prog
+                    processes.append(cmd)
         except IOError:
             continue
 
     return processes
+
 
 def is_os_update_pending():
     return os.path.exists("/run/update-engine/done")
 
 
 def inhibitors():
-    inhibitors = [file for file in INHIBITOR_FILES if os.path.exists(file)]
+    inhibitors = [f for f in INHIBITOR_FILES if os.path.exists(f)]
     if is_os_update_pending():
         return inhibitors
 
     powersave = False
     try:
         governor = '/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor'
-        setting = open(governor, 'rb').read()
+        with open(governor, 'r') as f:
+            setting = f.read()
         powersave = setting.startswith("powersave") or setting.startswith("userspace")
     except IOError:
         pass
@@ -123,6 +126,7 @@ def inhibitors():
     if UPDATER_PROCESS in processes():
         inhibitors.append(UPDATER_PROCESS)
     return inhibitors
+
 
 if not is_os_update_pending():
     # Check that we have a local timezone and not just the default
@@ -171,7 +175,7 @@ if not is_os_update_pending():
 
 # Wait until all the inhibitors are cleared
 while len(inhibitors()) > 0:
-    exit_if_too_late(reason = str(inhibitors()))
+    exit_if_too_late(reason=str(inhibitors()))
     print_and_sleep("{0} exists".format(inhibitors()), inhibitor_delay)
 
 reboot()

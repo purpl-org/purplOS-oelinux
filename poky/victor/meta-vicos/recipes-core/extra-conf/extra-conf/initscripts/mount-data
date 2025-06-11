@@ -34,7 +34,7 @@ KEY_FILE="/run/userdata.key"
 CONNMAN_DONE_TOKEN=/data/lib/connman/.mount-data
 ROBOT_KEY=/data/etc/robot.pem
 USER_DATA_PARTITION=/dev/block/bootdevice/by-name/userdata
-MOUNT_OPTIONS="defaults,noexec,nosuid,nodev,noatime"
+MOUNT_OPTIONS="defaults,exec,nosuid,nodev,noatime"
 
 mount_data_from_mapped_userdata() {
     mount -o $MOUNT_OPTIONS --source /dev/mapper/userdata --target /data
