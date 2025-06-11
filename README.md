@@ -6,7 +6,7 @@ This builds the OS, the /anki programs (`purplOS`), and creates a final OTA.
 
 - /poky/poky -> [yoctoproject/poky](https://github.com/yoctoproject/poky) (walnascar)
 - /poky/meta-openembedded -> [openembedded/meta-openembedded](https://github.com/openembedded/meta-openembedded) (walnascar)
-- /anki/victor -> [purplOS-oelinux-victor](https://github.com/purpl-org/purplOS) (main)
+- /anki/victor -> [purplOS](https://github.com/purpl-org/purplOS) (main)
 - /anki/wired -> [wired](https://github.com/os-vector/wired) (main)
 
 ## Update notes:
@@ -47,13 +47,8 @@ cd purplOS-oelinux
 
 ### Where is my OTA?
 
-`./_build/3.0.1.1.ota`
+`./_build/0.3.1.1.ota`
 
-##  Donate
-
-If you want to :P
-
-[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/kercre123)
 
 ## Differences compared to normal Vector FW
 
