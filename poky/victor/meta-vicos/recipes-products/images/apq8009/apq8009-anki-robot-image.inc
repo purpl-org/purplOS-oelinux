@@ -54,6 +54,7 @@ IMAGE_INSTALL += "adsprpc"
 IMAGE_INSTALL += "init-audio"
 IMAGE_INSTALL += "mm-camera"
 IMAGE_INSTALL += "ankibluetoothd"
+IMAGE_INSTALL += "adreno"
 
 IMAGE_INSTALL += "busybox"
 
