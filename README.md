@@ -73,8 +73,19 @@ cd purplOS-oelinux
 
 -	`anki-debug`
 	-	If you are debugging `victor` and want to see backtraces in /var/log/messages, run this to enable those.
--	`ddn <on/off>`
+-	`ddn [on/off]`
 	-	Turns on/off DevDoNothing, which makes the bot stand still until shaken.
+-	`vmesg [-c|-t] <grep args>`
+	-	A wrapper for cat/tail /var/log/messages:
+
+```
+usage: vmesg [-t|-c] <grep args>
+this is a helper tool for viewing Vector's /var/log/messages
+if no grep args are provided, the tailed/whole log will be given
+-t = tail (-f), -c = cat
+example for searching: vmesg -t -i "tflite\|gpu"
+example for whole log: vmesg -c
+```
 
 ## Proprietary software notes
 

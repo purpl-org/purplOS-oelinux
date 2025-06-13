@@ -45,6 +45,7 @@ IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'nano', d)}"
 IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'rsync', d)}"
 IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'htop', d)}"
 
+# all the HAL stuff
 IMAGE_INSTALL += "audiohal"
 IMAGE_INSTALL += "bt-property"
 IMAGE_INSTALL += "libbt-vendor"
@@ -58,9 +59,10 @@ IMAGE_INSTALL += "adreno"
 
 IMAGE_INSTALL += "busybox"
 
-# busybox's ps and netstat are not good enough for me
+# busybox's ps, netstat, and dmesg are not good enough for me
 IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'procps', d)}"
 IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'net-tools', d)}"
+IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'util-linux-dmesg', d)}"
 
 IMAGE_INSTALL += "syslog-ng"
 IMAGE_INSTALL += "logrotate"

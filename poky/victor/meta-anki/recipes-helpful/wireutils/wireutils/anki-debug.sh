@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# author: Wire/@kercre123
+
 set -e
 
 echo "This script gives/takes away debuggerd the ability to backtrace tombstones from the Anki programs, making them appear in logs."

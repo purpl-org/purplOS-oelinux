@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# author: Wire/@kercre123
+
 set -e
 
 if [[ $1 == "off" ]]; then

@@ -8,6 +8,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI = " \
     file://anki-debug.sh \
     file://ddn.sh \
+    file://vmesg.sh \
 "
 
 S = "${WORKDIR}/sources"
@@ -18,9 +19,11 @@ do_install() {
 
     install -m 0755 ${S}/anki-debug.sh  ${D}${sbindir}/anki-debug
     install -m 0755 ${S}/ddn.sh         ${D}${sbindir}/ddn
+    install -m 0755 ${S}/vmesg.sh	${D}${sbindir}/vmesg
 }
 
 FILES:${PN} = "${sbindir}/ddn \
-               ${sbindir}/anki-debug"
+               ${sbindir}/anki-debug \
+               ${sbindir}/vmesg"
 
 RDEPENDS:${PN} = "bash"
