@@ -55,7 +55,7 @@ IMAGE_INSTALL += "adsprpc"
 IMAGE_INSTALL += "init-audio"
 IMAGE_INSTALL += "mm-camera"
 IMAGE_INSTALL += "ankibluetoothd"
-IMAGE_INSTALL += "adreno"
+#IMAGE_INSTALL += "adreno"
 
 IMAGE_INSTALL += "busybox"
 
@@ -63,6 +63,9 @@ IMAGE_INSTALL += "busybox"
 IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'procps', d)}"
 IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'net-tools', d)}"
 IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'util-linux-dmesg', d)}"
+
+#IMAGE_INSTALL += "gdb"
+#IMAGE_INSTALL += "strace"
 
 IMAGE_INSTALL += "syslog-ng"
 IMAGE_INSTALL += "logrotate"

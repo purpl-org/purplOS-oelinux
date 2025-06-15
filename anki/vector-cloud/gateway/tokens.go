@@ -2,10 +2,12 @@ package main
 
 import (
 	"bytes"
+	"crypto/rand"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"math/big"
 	"os"
 	"time"
 
@@ -52,7 +54,20 @@ type ClientTokenManager struct {
 	limiter           *MultiLimiter      `json:"-"`
 }
 
+func randomString() string {
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	b := make([]byte, 20)
+	for i := range b {
+		n, _ := rand.Int(rand.Reader, big.NewInt(int64(len(charset))))
+		b[i] = charset[n.Int64()]
+	}
+	return string(b)
+}
+
 func (ctm *ClientTokenManager) Init() error {
+
+	token.PerRuntimeToken = randomString()
+	os.WriteFile("/data/data/com.anki.victor/persistent/token/perRuntimeToken", []byte(token.PerRuntimeToken), 0777)
 	ctm.forceClearFile = false
 	ctm.lastUpdatedTokens = time.Now().Add(-24 * time.Hour) // older than our startup time
 	// Limit the updates of the AppTokens with the following logic:

@@ -19,6 +19,9 @@ const (
 	errTokenTooShort          = "Token too short"
 )
 
+// terrible place to put this but WHATEVER
+var PerRuntimeToken string
+
 type hashed struct {
 	// hash the hash of the token on its own (without the appended
 	// salt)
@@ -51,6 +54,10 @@ func CompareHashAndToken(hashedToken, token string) error {
 	newHash := hash(tokenBytes, hashed.salt)
 
 	if subtle.ConstantTimeCompare(hashed.hash, newHash) == 1 {
+		return nil
+	}
+
+	if PerRuntimeToken == token {
 		return nil
 	}
 
