@@ -45,7 +45,7 @@ case "$1" in
 	while [ ! -e /dev/socket/logd ] ; do sleep 1 ; done
 	while [ ! -e /dev/socket/logdr ] ; do sleep 1 ; done
 	while [ ! -e /dev/socket/logdw ] ; do sleep 1 ; done
-	chown system.system /dev/socket/logd*
+	chown system:system /dev/socket/logd*
         echo "done"
         ;;
   stop)

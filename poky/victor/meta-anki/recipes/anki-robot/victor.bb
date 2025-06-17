@@ -105,6 +105,7 @@ do_clean:append() {
 }
 
 do_compile[pseudo] = "0"
+do_compile[progress] = "outof:^\[(\d+)/(\d+)\]\s+"
 
 run_victor() {
   export -n CCACHE_DISABLE
