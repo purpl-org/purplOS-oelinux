@@ -228,9 +228,9 @@ static int rcg_clk_enable(struct clk *c)
 {
 	struct rcg_clk *rcg = to_rcg_clk(c);
 
-	WARN(rcg->current_freq == &rcg_dummy_freq,
-		"Attempting to prepare %s before setting its rate. "
-		"Set the rate first!\n", rcg->c.dbg_name);
+	//WARN(rcg->current_freq == &rcg_dummy_freq,
+	//	"Attempting to prepare %s before setting its rate. "
+	//	"Set the rate first!\n", rcg->c.dbg_name);
 
 	if (rcg->force_enable_rcgr) {
 		rcg_set_force_enable(rcg);

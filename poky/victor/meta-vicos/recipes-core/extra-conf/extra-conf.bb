@@ -31,6 +31,7 @@ do_install () {
 	ln -sf /usr/lib/systemd/system/mm-qcamera-daemon.service ${D}/usr/lib/systemd/system/multi-user.target.wants/
 	ln -sf /usr/lib/systemd/system/mount-data.service ${D}/usr/lib/systemd/system/local-fs.target.requires/
 	ln -sf /usr/lib/systemd/system/partition-links.service ${D}/usr/lib/systemd/system/multi-user.target.wants/
+	ln -sf /usr/lib/systemd/system/enable-wifi.service ${D}/usr/lib/systemd/system/multi-user.target.wants/
 }
 
 FILES:${PN} = "	/usr/lib/systemd/system \

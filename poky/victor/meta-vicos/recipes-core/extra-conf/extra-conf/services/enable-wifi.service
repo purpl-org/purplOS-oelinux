@@ -1,0 +1,12 @@
+[Unit]
+SourcePath=/etc/initscripts/enable-wifi
+Description=Enable wifi in connman
+Wants=connman.service
+After=mount-data.service
+
+[Service]
+Type=simple
+ExecStart=/etc/initscripts/enable-wifi
+
+[Install]
+WantedBy=multi-user.target

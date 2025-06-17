@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2011-2018 The Linux Foundation. All rights reserved.
+ * Copyright (c) 2011-2019 The Linux Foundation. All rights reserved.
+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * Previously licensed under the ISC license by Qualcomm Atheros, Inc.
  *
@@ -1119,6 +1120,13 @@ limCleanupMlm(tpAniSirGlobal pMac)
         tx_timer_delete(&pMac->lim.limTimers.gLimFTPreAuthRspTimer);
 #endif
 
+#ifdef WLAN_FEATURE_LFR_MBB
+        tx_timer_deactivate(&pMac->lim.limTimers.glim_pre_auth_mbb_rsp_timer);
+        tx_timer_delete(&pMac->lim.limTimers.glim_pre_auth_mbb_rsp_timer);
+
+        tx_timer_deactivate(&pMac->lim.limTimers.glim_reassoc_mbb_rsp_timer);
+        tx_timer_delete(&pMac->lim.limTimers.glim_reassoc_mbb_rsp_timer);
+#endif
 
 #if defined(FEATURE_WLAN_ESE) && !defined(FEATURE_WLAN_ESE_UPLOAD)
         // Deactivate and delete TSM
@@ -1140,6 +1148,9 @@ limCleanupMlm(tpAniSirGlobal pMac)
 
         tx_timer_deactivate(&pMac->lim.limTimers.g_lim_ap_ecsa_timer);
         tx_timer_delete(&pMac->lim.limTimers.g_lim_ap_ecsa_timer);
+
+        tx_timer_deactivate(&pMac->lim.limTimers.sae_auth_timer);
+        tx_timer_delete(&pMac->lim.limTimers.sae_auth_timer);
 
         pMac->lim.gLimTimersCreated = 0;
     }
@@ -2681,19 +2692,16 @@ void limProcessChannelSwitchTimeout(tpAniSirGlobal pMac)
             return;
         }
 
-        /* If the channel-list that AP is asking us to switch is invalid,
-         * then we cannot switch the channel. Just disassociate from AP. 
-         * We will find a better AP !!!
-         */
-        if ((psessionEntry->limMlmState == eLIM_MLM_LINK_ESTABLISHED_STATE) &&
-           (psessionEntry->limSmeState != eLIM_SME_WT_DISASSOC_STATE)&&
-           (psessionEntry->limSmeState != eLIM_SME_WT_DEAUTH_STATE)) {
-              limLog(pMac, LOGE, FL("Invalid channel!! Disconnect.."));
-              limTearDownLinkWithAp(pMac,
-                        pMac->lim.limTimers.gLimChannelSwitchTimer.sessionId,
-                        eSIR_MAC_UNSPEC_FAILURE_REASON);
-        }
-        return;
+	/* The channel switch request received from AP is carrying
+	 * invalid channel. It's ok to ignore this channel switch
+	 * request as it might be from spoof AP. If it's from genuine
+	 * AP, it may lead to heart beat failure and result in
+	 * disconnection. DUT can go ahead and reconnect to it/any
+	 * other AP once it disconnects.
+	 */
+	limLog(pMac, LOGE, FL("Invalid channel %u Ignore CSA request"),
+	       channel);
+	return;
     }
     limCovertChannelScanType(pMac, psessionEntry->currentOperChannel, false);
     pMac->lim.dfschannelList.timeStamp[psessionEntry->currentOperChannel] = 0;
@@ -2967,10 +2975,11 @@ void lim_handle_ecsa_req(tpAniSirGlobal mac_ctx, struct ecsa_frame_params *ecsa_
    session->gLimChannelSwitch.secondarySubBand = PHY_SINGLE_CHANNEL_CENTERED;
    session->gLimWiderBWChannelSwitch.newChanWidth = 0;
 
-   ch_offset = limGetOffChMaxBwOffsetFromChannel(
-                       mac_ctx->scan.countryCodeCurrent,
-                       ecsa_req->new_channel,
-                       sta_ds->mlmStaContext.vhtCapability);
+   ch_offset =
+       lim_get_channel_width_from_opclass(mac_ctx->scan.countryCodeCurrent,
+                                          ecsa_req->new_channel,
+                                          sta_ds->mlmStaContext.vhtCapability,
+                                          ecsa_req->op_class);
    if (ch_offset == BW80) {
        session->gLimWiderBWChannelSwitch.newChanWidth =
                                   WNI_CFG_VHT_CHANNEL_WIDTH_80MHZ;
@@ -7021,8 +7030,13 @@ limRestorePreChannelSwitchState(tpAniSirGlobal pMac, tpPESession psessionEntry)
     /* Channel switch should be ready for the next time */
     psessionEntry->gLimSpecMgmt.dot11hChanSwState = eLIM_11H_CHANSW_INIT;
 
-    /* Restore the frame transmission, all the time. */
-    limFrameTransmissionControl(pMac, eLIM_TX_ALL, eLIM_RESUME_TX);
+    /* Restore the frame transmission, if switched channel is NON-DFS.
+     * Else tx should be resumed after receiving first beacon on DFS channel
+     */
+    if(!limIsconnectedOnDFSChannel(psessionEntry->currentOperChannel))
+        limFrameTransmissionControl(pMac, eLIM_TX_ALL, eLIM_RESUME_TX);
+    else
+        psessionEntry->gLimSpecMgmt.dfs_channel_csa = true;
 
     /* Free to enter BMPS */
     limSendSmePostChannelSwitchInd(pMac);
@@ -7185,6 +7199,19 @@ limPrepareFor11hChannelSwitch(tpAniSirGlobal pMac, tpPESession psessionEntry)
     else
     {
         PELOGE(limLog(pMac, LOGE, FL("Not in scan state, start channel switch timer"));)
+
+        /* Stop roam scan during CAC period in DFS channels */
+        if(limIsconnectedOnDFSChannel(
+                            psessionEntry->gLimChannelSwitch.primaryChannel)) {
+#ifdef WLAN_FEATURE_ROAM_SCAN_OFFLOAD
+            if (pMac->roam.configParam.isRoamOffloadScanEnabled) {
+               csrRoamOffloadScan(pMac, ROAM_SCAN_OFFLOAD_STOP,
+                                  REASON_DISCONNECTED);
+            }
+#endif
+        psessionEntry->gLimSpecMgmt.dfs_channel_csa = true;
+        }
+
         /** We are safe to switch channel at this point */
         limStopTxAndSwitchChannel(pMac, psessionEntry->peSessionId);
     }
