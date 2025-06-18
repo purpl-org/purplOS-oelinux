@@ -137,12 +137,15 @@ YOCTO_BUILD_COMMAND="echo && echo -e \"\e[1;32mBuilding the OS...\e[0m\" && echo
 echo "Building a $BOT_TYPE OTA"
 export BOOT_IMAGE_SIGNING_PASSWORD="${BOOT_PASSWORD}"
 
+ANKIDEV=1
+
 if [[ $BOT_TYPE == "oskr" ]]; then
         export BOOT_IMAGE_SIGNING_PASSWORD="${BOOT_PASSWORD}"
 	BOOT_MAKE_COMMAND="make oskrsign"
 elif [[ $BOT_TYPE == "prod" ]]; then
         export BOOT_IMAGE_SIGNING_PASSWORD="${BOOT_PASSWORD}"
 	BOOT_MAKE_COMMAND="make prodsign"
+	ANKIDEV=0
 elif [[ $BOT_TYPE == "devcloudless" ]]; then
         BOOT_MAKE_COMMAND="make devsign"
 else
@@ -192,7 +195,7 @@ docker run -it --rm \
     export OTA_MANIFEST_SIGNING_KEY=${OTA_SIGNING_KEY_PASSWORD} && \
     export BOOT_IMAGE_SIGNING_PASSWORD=${BOOT_PASSWORD} && \
     ${BOOT_MAKE_COMMAND} && \
-    make"
+    ANKIDEV=${ANKIDEV} make"
 
 echo
 echo -e "\033[1;32mCompleted successfully. Output is in ./_build.\033[0m"
