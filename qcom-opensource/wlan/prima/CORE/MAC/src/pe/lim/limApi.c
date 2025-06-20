@@ -235,7 +235,31 @@ static void __limInitStatsVars(tpAniSirGlobal pMac)
 #endif    
 }
 
+eHalStatus pe_AcquireGlobalLock( tAniSirLim *psPe)
+{
+    eHalStatus status = eHAL_STATUS_INVALID_PARAMETER;
 
+    if(psPe)
+    {
+        if( VOS_IS_STATUS_SUCCESS( vos_lock_acquire( &psPe->lkPeGlobalLock) ) )
+        {
+            status = eHAL_STATUS_SUCCESS;
+        }
+    }
+    return (status);
+}
+eHalStatus pe_ReleaseGlobalLock( tAniSirLim *psPe)
+{
+    eHalStatus status = eHAL_STATUS_INVALID_PARAMETER;
+    if(psPe)
+    {
+        if( VOS_IS_STATUS_SUCCESS( vos_lock_release( &psPe->lkPeGlobalLock) ) )
+        {
+            status = eHAL_STATUS_SUCCESS;
+        }
+    }
+    return (status);
+}
 
 static void __limInitStates(tpAniSirGlobal pMac)
 {
@@ -2722,31 +2746,31 @@ tMgmtFrmDropReason limIsPktCandidateForDrop(tpAniSirGlobal pMac, tANI_U8 *pRxPac
     return eMGMT_DROP_NO_DROP;
 }
 
-eHalStatus pe_AcquireGlobalLock( tAniSirLim *psPe)
-{
-    eHalStatus status = eHAL_STATUS_INVALID_PARAMETER;
-
-    if(psPe)
-    {
-        if( VOS_IS_STATUS_SUCCESS( vos_lock_acquire( &psPe->lkPeGlobalLock) ) )
-        {
-            status = eHAL_STATUS_SUCCESS;
-        }
-    }
-    return (status);
-}
-eHalStatus pe_ReleaseGlobalLock( tAniSirLim *psPe)
-{
-    eHalStatus status = eHAL_STATUS_INVALID_PARAMETER;
-    if(psPe)
-    {
-        if( VOS_IS_STATUS_SUCCESS( vos_lock_release( &psPe->lkPeGlobalLock) ) )
-        {
-            status = eHAL_STATUS_SUCCESS;
-        }
-    }
-    return (status);
-}
+//eHalStatus pe_AcquireGlobalLock( tAniSirLim *psPe)
+//{
+//    eHalStatus status = eHAL_STATUS_INVALID_PARAMETER;
+//
+//    if(psPe)
+//    {
+//        if( VOS_IS_STATUS_SUCCESS( vos_lock_acquire( &psPe->lkPeGlobalLock) ) )
+//        {
+//            status = eHAL_STATUS_SUCCESS;
+//        }
+//    }
+//    return (status);
+//}
+//eHalStatus pe_ReleaseGlobalLock( tAniSirLim *psPe)
+//{
+//    eHalStatus status = eHAL_STATUS_INVALID_PARAMETER;
+//    if(psPe)
+//    {
+//        if( VOS_IS_STATUS_SUCCESS( vos_lock_release( &psPe->lkPeGlobalLock) ) )
+//        {
+//            status = eHAL_STATUS_SUCCESS;
+//        }
+//    }
+//    return (status);
+//}
 /**
  * lim_process_sme_cap_tsf_req()- send cap tsf request to WDA
  * Get bss_idx from PE and fill in cap tsf request.

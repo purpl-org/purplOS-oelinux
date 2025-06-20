@@ -44,7 +44,7 @@ void kmsg_log(const char *fmt, ...) __attribute__ ((format(printf, 1, 2)));
 void kmsg_enable(void);
 void kmsg_disable(void);
 
-#define KMSGI(format, args...) kmsg_log("<3>rmt_storage:INFO:%s: " format "\n", __func__, ##args)
+#define KMSGI(format, args...) kmsg_log("<6>rmt_storage:INFO:%s: " format "\n", __func__, ##args)
 #define KMSGE(format, args...) kmsg_log("<3>rmt_storage:ERR:%s: " format "\n", __func__, ##args)
 
 #include "common_v01.h"

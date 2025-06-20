@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -188,12 +188,12 @@ static int __mdp3_map_layer_buffer(struct msm_fb_data_type *mfd,
 		struct mdp_input_layer *input_layer)
 {
 	struct mdp3_session_data *mdp3_session = mfd->mdp.private1;
-	struct mdp3_dma *dma = mdp3_session->dma;
 	struct mdp_input_layer *layer = NULL;
 	struct mdp_layer_buffer *buffer;
 	struct msmfb_data img;
 	bool is_panel_type_cmd = false;
 	struct mdp3_img_data data;
+	int intf_type;
 	int rc = 0;
 
 	layer = &input_layer[0];
@@ -205,34 +205,29 @@ static int __mdp3_map_layer_buffer(struct msm_fb_data_type *mfd,
 		goto err;
 	}
 
+	intf_type = mdp3_get_ion_client(mfd);
 	memset(&img, 0, sizeof(img));
 	img.memory_id = buffer->planes[0].fd;
 	img.offset = buffer->planes[0].offset;
 
 	memset(&data, 0, sizeof(struct mdp3_img_data));
 
-	if (mfd->panel.type == MIPI_CMD_PANEL)
+	if (mfd->panel.type == MIPI_CMD_PANEL || intf_type == MDP3_CLIENT_SPI)
 		is_panel_type_cmd = true;
 	if (is_panel_type_cmd) {
-		rc = mdp3_iommu_enable(MDP3_CLIENT_DMA_P);
+		rc = mdp3_iommu_enable(intf_type);
 		if (rc) {
 			pr_err("fail to enable iommu\n");
 			return rc;
 		}
 	}
 
-	rc = mdp3_get_img(&img, &data, MDP3_CLIENT_DMA_P);
+	if (layer->flags & MDP_LAYER_SECURE_DISPLAY_SESSION)
+		data.flags |=  MDP_SECURE_DISPLAY_OVERLAY_SESSION;
+
+	rc = mdp3_get_img(&img, &data, intf_type);
 	if (rc) {
 		pr_err("fail to get overlay buffer\n");
-		goto err;
-	}
-
-	if (data.len < dma->source_config.stride * dma->source_config.height) {
-		pr_err("buf size(0x%lx) is smaller than dma config(0x%x)\n",
-			data.len, (dma->source_config.stride *
-			dma->source_config.height));
-		mdp3_put_img(&data, MDP3_CLIENT_DMA_P);
-		rc = -EINVAL;
 		goto err;
 	}
 
@@ -249,6 +244,23 @@ err:
 	return rc;
 }
 
+static void mdp3_validate_secure_layer(struct msm_fb_data_type *mfd,
+		 struct mdp_input_layer *input_layer)
+{
+	struct mdp3_session_data *mdp3_session = mfd->mdp.private1;
+	struct mdp_input_layer *layer = &input_layer[0];
+
+	if (!atomic_read(&mdp3_session->secure_display) &&
+			(layer->flags & MDP_LAYER_SECURE_DISPLAY_SESSION)) {
+		mdp3_session->transition_state = NONSECURE_TO_SECURE;
+	} else if (atomic_read(&mdp3_session->secure_display) &&
+			!(layer->flags & MDP_LAYER_SECURE_DISPLAY_SESSION)) {
+		mdp3_session->transition_state = SECURE_TO_NONSECURE;
+	} else {
+		mdp3_session->transition_state = NO_TRANSITION;
+	}
+}
+
 int mdp3_layer_pre_commit(struct msm_fb_data_type *mfd,
 	struct file *file, struct mdp_layer_commit_v1 *commit)
 {
@@ -257,7 +269,7 @@ int mdp3_layer_pre_commit(struct msm_fb_data_type *mfd,
 	struct mdp3_session_data *mdp3_session;
 	struct mdp3_dma *dma;
 	int layer_count = commit->input_layer_cnt;
-	int stride, format;
+	int stride, format, client;
 
 	/* Handle NULL commit */
 	if (!layer_count) {
@@ -270,7 +282,8 @@ int mdp3_layer_pre_commit(struct msm_fb_data_type *mfd,
 
 	mutex_lock(&mdp3_session->lock);
 
-	mdp3_bufq_deinit(&mdp3_session->bufq_in);
+	client = mdp3_get_ion_client(mfd);
+	mdp3_bufq_deinit(&mdp3_session->bufq_in, client);
 
 	layer_list = commit->input_layers;
 	layer = &layer_list[0];
@@ -295,6 +308,8 @@ int mdp3_layer_pre_commit(struct msm_fb_data_type *mfd,
 		mutex_unlock(&mdp3_session->lock);
 		return ret;
 	}
+
+	mdp3_validate_secure_layer(mfd, layer);
 
 	ret = __mdp3_map_layer_buffer(mfd, layer);
 	if (ret) {

@@ -18,7 +18,8 @@ This builds the OS, the /anki programs (`purplOS`), and creates a final OTA.
 - **06-05-2025**: `./build/clean.sh "lvm2 libpam packagegroup-core-base-utils"`
 - **06-08-2025**: `./build/clean.sh "systemd packagegroup-core-boot"`
 - **06-10-2025**: `./build/clean.sh "system-core"`
-- **06-17-2025**: `./build/clean.sh "connman wpa-supplicant"
+- **06-17-2025**: `./build/clean.sh "connman wpa-supplicant"`
+- **06-19-2025**: **PLEASE DO THIS**: `./build/clean.sh "linux-msm rmtstorage"`
 
 ## Build
 

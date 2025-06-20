@@ -1,7 +1,7 @@
 inherit autotools qcommon qprebuilt qlicense
 
 DESCRIPTION = "rmt_storage server module"
-PR = "r10"
+PR = "r11"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI  = "file://remotefs/"

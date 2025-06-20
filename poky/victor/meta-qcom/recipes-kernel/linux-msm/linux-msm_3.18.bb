@@ -8,7 +8,7 @@ KERNEL_IMAGEDEST_apq8096 = "boot"
 
 SRC_DIR   =  "${WORKSPACE}/kernel/msm-3.18"
 S         =  "${WORKDIR}/kernel/msm-3.18"
-PR = "r5"
+PR = "r6"
 
 SRC_URI += "file://defconfig"
 
