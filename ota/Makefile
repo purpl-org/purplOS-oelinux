@@ -67,7 +67,7 @@ $(BUILD)/%.img: $(IMG_DIR)/%.img
 	dd if=/dev/zero of=$@ bs=1 count=$(shell echo $$(( 4096 - `stat -c %s $<` % 4096 ))) conv=notrunc oflag=append
 
 %.img.gz: %.img
-	gzip $(GZIP_MODE) --force --keep $<
+	./pigz/amd64/pigz $(GZIP_MODE) --force --keep $<
 
 %.img.gz.enc: %.img.gz
 	openssl aes-256-ctr -pass $(OTAPASS) -md md5 -in $< -out $@

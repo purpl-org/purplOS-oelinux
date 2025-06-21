@@ -44,4 +44,3 @@ FILES:${PN}     += "${sysconfdir}/init.d/adsprpcd ${sysconfdir}/init.d/mdsprpcd 
 FILES:${PN}     += "usr/lib/systemd/system"
 FILES:${PN}     += "etc/systemd/system"
 FILES:${PN}-dev  = "${libdir}/*.la ${includedir}"
-FILES:${PN} += "/etc/*"
