@@ -21,16 +21,11 @@ if [[ -f old-toolchain/arm/gcc-linaro-4.9-2016.02-manifest.txt ]]; then
 fi
 
 # if hf compiler, we want to replace with armel
-if [[ ! -d old-toolchain/arm ]] || [[ -d old-toolchain/arm/arm-linux-gnueabihf ]] || [[ -f old-toolchain/arm/gcc-linaro-4.9-2016.02-manifest.txt ]]; then
-	#if [[ -d old-toolchain ]]; then
-	#	echo "as root because this was originally done in a docker container, so perms are messed up"
-	rm -rf old-toolchain
-	#fi
-	mkdir -p old-toolchain
-	cd old-toolchain
-	wget -q --show-progress https://github.com/os-vector/wire-os-externals/releases/download/4.0.0-r05/armel-7.5.0.tar.gz
-	tar -zxf armel-7.5.0.tar.gz
-	rm armel-7.5.0.tar.gz
+if [[ -d old-toolchain ]]; then
+	echo "Old toolchain detected - we have to delete Yocto's ENTIRE build cache."
+	echo "Deleting... this will take a while..."
+	sudo rm -rf old-toolchain
+	sudo rm -rf poky/build/tmp-glibc poky/build/cache poky/build/sstate-cache
 fi
 
 cd "$OD"

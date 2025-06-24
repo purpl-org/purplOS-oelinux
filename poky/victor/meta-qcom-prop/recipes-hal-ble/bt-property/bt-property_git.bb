@@ -1,4 +1,4 @@
-inherit autotools-brokensep pkgconfig systemd update-rc.d gccseven
+inherit autotools-brokensep pkgconfig systemd update-rc.d
 
 DESCRIPTION = "Bluetooth Property Daemon"
 HOMEPAGE = "http://codeaurora.org/"
@@ -17,7 +17,7 @@ EXTRA_OECONF = " \
                "
 S = "${WORKDIR}/qcom-opensource/bt/property-ops"
 
-CFLAGS:append = " -DUSE_ANDROID_LOGGING "
+CFLAGS:append = " -DUSE_ANDROID_LOGGING -fno-strict-aliasing -fno-tree-vectorize "
 LDFLAGS:append = " -llog "
 
 INITSCRIPT_NAME = "start_btproperty"

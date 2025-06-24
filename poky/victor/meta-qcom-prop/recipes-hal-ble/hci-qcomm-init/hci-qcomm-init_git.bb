@@ -1,4 +1,4 @@
-inherit autotools qcommon qlicense gccseven
+inherit autotools qcommon qlicense
 
 DESCRIPTION = "Bluetooth BT Vendor Filters"
 PR = "r0"
@@ -22,7 +22,7 @@ EXTRA_OECONF = "--with-lib-path=${STAGING_LIBDIR} \
                "
 
 CFLAGS:append = " -DUSE_ANDROID_LOGGING -Wno-implicit-function-declaration \
-                  -Wno-incompatible-pointer-types -Wno-implicit-int"
+                  -Wno-incompatible-pointer-types -Wno-implicit-int -fno-strict-aliasing -fno-tree-vectorize"
 LDFLAGS:append = " -llog -Wl,--allow-multiple-definition"
 
 do_compile:prepend() {
@@ -153,7 +153,11 @@ do_install:append () {
         install -m 644 ${S}/btqsocnvm.h ${D}${includedir}
         install -m 644 ${S}/btqsocnvmutils.h ${D}${includedir}
     fi
+    install -d ${D}/usr/bin
+    rm -f ${D}/usr/bin/hci_qcomm_init
+    install -m 755 ${S}/hci_qcomm_init_49 ${D}/usr/bin/hci_qcomm_init
 }
 
 INSANE_SKIP:${PN} += "rpaths"
 INSANE_SKIP:${PN} += "ldflags"
+INSANE_SKIP:${PN} += "already-stripped"

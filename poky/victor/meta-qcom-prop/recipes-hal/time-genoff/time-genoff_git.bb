@@ -1,4 +1,4 @@
-inherit autotools qcommon qprebuilt qlicense gccseven
+inherit autotools qcommon qprebuilt qlicense
 
 DESCRIPTION = "Time Genoff Library"
 PR = "r0"

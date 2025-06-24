@@ -1,4 +1,4 @@
-inherit autotools-brokensep pkgconfig gccseven
+inherit autotools-brokensep pkgconfig
 
 DESCRIPTION = "Bluetooth Vendor Library"
 HOMEPAGE = "http://codeaurora.org/"
@@ -16,7 +16,7 @@ SRC_URI = "file://hardware/qcom/bt/libbt-vendor/"
 
 S = "${WORKDIR}/hardware/qcom/bt/libbt-vendor"
 
-CFLAGS:append = " -DUSE_ANDROID_LOGGING -Wno-implicit-function-declaration -Wno-return-mismatch"
+CFLAGS:append = " -DUSE_ANDROID_LOGGING -Wno-implicit-function-declaration -Wno-return-mismatch -fno-strict-aliasing -fno-tree-vectorize"
 LDFLAGS:append = " -llog "
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
@@ -30,6 +30,7 @@ EXTRA_OECONF = "--with-common-includes="${WORKSPACE}/vendor/qcom/opensource/blue
                 --with-glib \
                "
 
+# TODO - XXX - WIRE - THIS IS NOT FUTURE-PROOF - THIS IS REALLY FUCKING BAD, AT LEAST USE STAGING_LIBDIR + RELATIVITY
 do_compile:prepend() {
     rm -f ${WORKSPACE}/poky/build/tmp-glibc/work/apq8009_robot-oe-linux-gnueabi/hci-qcomm-init/git/recipe-sysroot/usr/lib/libc.so
     ln -s libc.so.6 ${WORKSPACE}/poky/build/tmp-glibc/work/apq8009_robot-oe-linux-gnueabi/hci-qcomm-init/git/recipe-sysroot/usr/lib/libc.so
@@ -160,3 +161,7 @@ do_install:append () {
     install -d ${D}/misc/bluetooth
     install -m 755 ${S}/init.msm.bt.sh ${D}/misc/bluetooth/
 }
+
+INSANE_SKIP:${PN} += "rpaths"
+INSANE_SKIP:${PN} += "already-stripped"
+INSANE_SKIP:${PN} += "ldflags"

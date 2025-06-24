@@ -1,4 +1,4 @@
-inherit qcommon qlicense qprebuilt gccseven
+inherit qcommon qlicense qprebuilt
 
 DESCRIPTION = "Qualcomm Data DSutils Module"
 PR = "r7"

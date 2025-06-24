@@ -1,4 +1,4 @@
-inherit autotools-brokensep gccseven
+inherit autotools-brokensep
 
 DESCRIPTION = "hardware btvendorhal headers"
 HOMEPAGE = "http://codeaurora.org/"
@@ -11,5 +11,7 @@ SRC_URI   = "file://vendor/qcom/opensource/bluetooth/"
 S = "${WORKDIR}/vendor/qcom/opensource/bluetooth"
 
 PR = "r1"
+
+CFLAGS += "-fno-strict-aliasing -fno-tree-vectorize"
 
 DEPENDS = "system-core"

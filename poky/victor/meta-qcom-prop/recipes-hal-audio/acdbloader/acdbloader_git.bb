@@ -1,4 +1,4 @@
-inherit autotools qcommon qprebuilt qlicense gccseven
+inherit autotools qcommon qprebuilt qlicense
 
 DESCRIPTION = "acdb loader Library"
 PR = "r7"
@@ -7,6 +7,9 @@ SRC_DIR = "${WORKSPACE}/audio/mm-audio/audio-acdb-util/acdb-loader/"
 S = "${WORKDIR}/audio/mm-audio/audio-acdb-util/acdb-loader"
 
 DEPENDS = "glib-2.0 acdbmapper audcal acdbrtac adiertac"
+
+CFLAGS += "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types"
+CXXFLAGS += "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types"
 
 do_install:append(){
     install -d ${D}${sysconfdir}/firmware/wcd9310

@@ -1,4 +1,4 @@
-inherit autotools gccseven
+inherit autotools
 SUMMARY = "ALSA sound library for compress format"
 LICENSE = "BSD & LGPLv2.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=7b60fb27ed2ff685a5c5f41b8b59cca6"

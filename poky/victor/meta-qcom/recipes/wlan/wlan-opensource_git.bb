@@ -1,4 +1,4 @@
-inherit module gccseven
+inherit module
 
 DESCRIPTION = "Qualcomm Atheros WLAN Host Driver Module"
 SECTION = "kernel/modules"

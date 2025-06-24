@@ -1,4 +1,4 @@
-inherit autotools-brokensep gccseven
+inherit autotools-brokensep
 
 DESCRIPTION = "hardware libhardware headers"
 HOMEPAGE = "http://codeaurora.org/"

@@ -1,4 +1,4 @@
-inherit qcommon systemd update-rc.d qprebuilt qlicense gccseven
+inherit qcommon systemd update-rc.d qprebuilt qlicense
 
 DESCRIPTION = "QMI Framework Library"
 

@@ -1,4 +1,4 @@
-inherit update-rc.d qcommon qlicense qprebuilt gccseven
+inherit update-rc.d qcommon qlicense qprebuilt
 
 DESCRIPTION = "QMUXD Module"
 PR = "r0"

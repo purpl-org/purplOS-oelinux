@@ -26,15 +26,15 @@ INITSCRIPT_PARAMS_${PN}       = "start 70 2 3 4 5 S . stop 30 0 1 6 ."
 
 inherit update-rc.d pkgconfig
 
-do_install:append () {
-    install -m 0755 ${UNPACKDIR}/start_${INITSCRIPT_NAME_${PN}} -D ${D}${sysconfdir}/init.d/${INITSCRIPT_NAME_${PN}}
+do_prebuilt_install:append() {
+    #install -m 0755 ${UNPACKDIR}/start_${INITSCRIPT_NAME_${PN}} -D ${D}${sysconfdir}/init.d/${INITSCRIPT_NAME_${PN}}
 
-    # Install systemd unit file
-    install -d ${D}${systemd_unitdir}/system
-    install -m 0644 ${UNPACKDIR}/${INITSCRIPT_NAME_${PN}}.service ${D}${systemd_unitdir}/system
+    # # Install systemd unit file
+    # install -d ${D}${systemd_unitdir}/system
+    # install -m 0644 ${UNPACKDIR}/${INITSCRIPT_NAME_${PN}}.service ${D}${systemd_unitdir}/system
 
     install -d ${D}/etc/systemd/system/multi-user.target.wants
-    ln -sf ${D}${systemd_unitdir}/system/mdsprpcd.service ${D}/etc/systemd/system/multi-user.target.wants/mdsprpcd.service
+    ln -sf /etc/systemd/system/mdsprpcd.service ${D}/etc/systemd/system/multi-user.target.wants/mdsprpcd.service
 }
 
 FILES:${PN}-dbg  = "${libdir}/.debug/* ${bindir}/.debug/*"

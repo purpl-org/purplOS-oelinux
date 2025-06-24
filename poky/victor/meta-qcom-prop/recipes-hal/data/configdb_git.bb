@@ -1,4 +1,4 @@
-inherit qcommon qlicense qprebuilt gccseven pkgconfig
+inherit qcommon qlicense qprebuilt pkgconfig
 
 DESCRIPTION = "Qualcomm Data Configdb Module"
 DEPENDS = "common dsutils diag xmllib glib-2.0"
@@ -133,3 +133,4 @@ EOF
 }
 
 INSANE_SKIP:${PN} += "ldflags"
+INSANE_SKIP:${PN} += "rpaths"

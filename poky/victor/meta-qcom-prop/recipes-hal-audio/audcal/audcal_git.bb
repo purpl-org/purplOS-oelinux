@@ -1,4 +1,4 @@
-inherit qcommon qprebuilt qlicense pkgconfig autotools gccseven
+inherit qcommon qprebuilt qlicense pkgconfig autotools
 
 DESCRIPTION = "Audio Calibration Library"
 PR = "r11"

@@ -1,4 +1,4 @@
-inherit qcommon qlicense qprebuilt gccseven
+inherit qcommon qlicense qprebuilt
 
 DESCRIPTION = "QMI Client Helper Module"
 PR = "r0"

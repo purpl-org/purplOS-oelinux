@@ -1,4 +1,4 @@
-inherit qcommon qprebuilt qlicense systemd gccseven
+inherit qcommon qprebuilt qlicense systemd
 
 DESCRIPTION = "Library and routing applications for diagnostic traffic"
 DEPENDS = "common glib-2.0 system-core time-genoff"

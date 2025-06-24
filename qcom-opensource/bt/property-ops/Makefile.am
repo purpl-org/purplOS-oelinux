@@ -4,10 +4,12 @@ AM_CFLAGS = -Wall \
     -Wundef \
     -Wstrict-prototypes \
     -Wno-trigraphs \
+    -D_GLIBCXX_USE_CXX11_ABI=0 \
     -std=c99
 
 AM_CPPFLAGS= \
-    -Iinclude/
+    -Iinclude/ \
+    -D_GLIBCXX_USE_CXX11_ABI=0
 
 # HAL layer
 c_sources = \

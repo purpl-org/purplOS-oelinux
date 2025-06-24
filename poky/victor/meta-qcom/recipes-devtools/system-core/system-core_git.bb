@@ -1,4 +1,4 @@
-inherit autotools pkgconfig systemd update-rc.d gccseven
+inherit autotools pkgconfig systemd update-rc.d
 
 DESCRIPTION = "Android system/core components"
 HOMEPAGE = "http://developer.android.com/"

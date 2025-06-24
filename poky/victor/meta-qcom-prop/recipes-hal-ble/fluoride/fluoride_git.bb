@@ -1,4 +1,4 @@
-inherit autotools-brokensep pkgconfig gccseven
+inherit autotools-brokensep pkgconfig
 
 DESCRIPTION = "Bluetooth Fluoride Stack"
 HOMEPAGE = "http://codeaurora.org/"
@@ -19,7 +19,7 @@ FILES:${PN} += "${libdir}"
 FILES:${PN} += "/misc/bluetooth/*"
 INSANE_SKIP:${PN} = "dev-so"
 
-CFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -Wno-implicit-function-declaration -Wno-return-mismatch -Wno-incompatible-pointer-types -Wno-int-conversion"
+CFLAGS:append = " -fno-strict-aliasing -fno-tree-vectorize -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -Wno-implicit-function-declaration -Wno-return-mismatch -Wno-incompatible-pointer-types -Wno-int-conversion"
 LDFLAGS:append = " -llog -Wl,--allow-multiple-definition"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"

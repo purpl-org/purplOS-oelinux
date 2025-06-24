@@ -1,4 +1,4 @@
-inherit autotools pkgconfig gccseven
+inherit autotools pkgconfig
 
 DESCRIPTION = "system media headers"
 HOMEPAGE = "http://developer.android.com/"

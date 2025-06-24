@@ -1,4 +1,4 @@
-inherit autotools pkgconfig gccseven
+inherit autotools pkgconfig
 
 DESCRIPTION = "audiohal"
 SECTION = "multimedia"
@@ -16,6 +16,10 @@ DEPENDS = "glib-2.0 tinycompress tinyalsa expat system-media libhardware acdbloa
 
 LDFLAGS += " -lm "
 CFLAGS += "-Wno-error"
+
+CFLAGS += "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types -Wno-return-mismatch"
+CXXFLAGS += "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types -Wno-return-mismatch"
+LDFLAGS += "-Wl,--allow-multiple-definition"
 
 EXTRA_OEMAKE = "DEFAULT_INCLUDES= CPPFLAGS="-I. -I${STAGING_KERNEL_BUILDDIR}/usr/include -I${STAGING_INCDIR}/surround_sound_3mic -I${STAGING_INCDIR}/sound_trigger""
 EXTRA_OECONF = "--with-sanitized-headers=${STAGING_KERNEL_BUILDDIR}/usr/include"

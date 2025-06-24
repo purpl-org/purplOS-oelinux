@@ -1,4 +1,4 @@
-inherit autotools pkgconfig gccseven
+inherit autotools pkgconfig
 
 DESCRIPTION = "Build LE libbase"
 HOMEPAGE = "http://developer.android.com/"

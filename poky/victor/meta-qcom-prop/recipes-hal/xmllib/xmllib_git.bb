@@ -1,4 +1,4 @@
-inherit qcommon qlicense qprebuilt gccseven
+inherit qcommon qlicense qprebuilt
 
 DESCRIPTION = "QTI XML Library"
 HOMEPAGE = "http://support.cdmatech.com"

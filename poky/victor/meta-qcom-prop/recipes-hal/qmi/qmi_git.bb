@@ -1,4 +1,4 @@
-inherit qcommon qlicense qprebuilt gccseven
+inherit qcommon qlicense qprebuilt
 
 DESCRIPTION = "Qualcomm MSM Interface (QMI) Library"
 
@@ -138,3 +138,5 @@ EXTRA_OECONF = "--with-qxdm \
                 --with-sysroot=${STAGING_LIBDIR}/../.."
 
 EXTRA_OECONF:append_msm8960 = " --enable-auto-answer=yes"
+
+INSANE_SKIP:${PN} += "rpaths"

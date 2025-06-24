@@ -1,5 +1,3 @@
-inherit gccseven
-
 DESCRIPTION = "User Data Locker"
 LICENSE = "Anki-Inc.-Proprietary"
 LIC_FILES_CHKSUM = "file://${COREBASE}/../victor/meta-qcom/files/anki-licenses/\
@@ -18,6 +16,9 @@ do_compile[depends] += "virtual/kernel:do_shared_workdir"
 TARGET_CXXFLAGS += "-I${STAGING_KERNEL_BUILDDIR}/usr/include"
 TARGET_CXXFLAGS += "-I${WORKSPACE}/security/securemsm/keymaster"
 TARGET_CXXFLAGS += "-I${WORKSPACE}/hardware/qcom/keymaster"
+
+CXXFLAGS += "-fno-strict-aliasing -fno-tree-vectorize"
+CFLAGS += "-fno-strict-aliasing -fno-tree-vectorize"
 
 do_install() {
   mkdir -p ${D}/usr/bin

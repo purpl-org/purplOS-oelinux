@@ -1,9 +1,12 @@
-inherit qcommon qprebuilt qlicense gccseven
+inherit qcommon qprebuilt qlicense
 
 DESCRIPTION = "adie rtac Library and calibiration files"
 PR = "r3"
 
 DEPENDS = "glib-2.0 audioalsa acdbmapper audcal"
+
+CFLAGS += "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types"
+CXXFLAGS += "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types"
 
 SRC_DIR = "${WORKSPACE}/audio/mm-audio/audio-acdb-util/adie-rtac/"
 S = "${WORKDIR}/audio/mm-audio/audio-acdb-util/adie-rtac"

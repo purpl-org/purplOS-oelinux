@@ -1,4 +1,4 @@
-inherit autotools qcommon qlicense update-rc.d qprebuilt systemd gccseven
+inherit autotools qcommon qlicense update-rc.d qprebuilt systemd
 DESCRIPTION = "Time Services Daemon"
 PR = "r9"
 
@@ -11,6 +11,9 @@ DEPENDS += "diag"
 DEPENDS += "qmi-framework"
 RDEPENDS:${PN} += "qmi-framework"
 
+CFLAGS += "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types -Wno-return-mismatch"
+CXXFLAGS += "-Wno-implicit-function-declaration -Wno-incompatible-pointer-types -Wno-return-mismatch"
+LDFLAGS += "-Wl,--allow-multiple-definition"
 
 INITSCRIPT_NAME = "time_serviced"
 INITSCRIPT_PARAMS = "start 29 2 3 4 5 . stop 1 0 1 6 ."

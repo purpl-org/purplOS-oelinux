@@ -4,6 +4,9 @@ AM_CPPFLAGS = 	-O2 \
 		-D_GNU_SOURCE \
 		-std=gnu++14 \
 		-I$(COMMON_DIR) \
+		-fno-rtti \
+		-fno-use-cxa-atexit \
+		-D_GLIBCXX_USE_CXX11_ABI=0 \
 		-I${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/ \
 		-I${WORKSPACE}/vendor/qcom/opensource/bluetooth/vhal/include \
 		-I${WORKSPACE}/system/core/include
@@ -11,8 +14,11 @@ AM_CPPFLAGS = 	-O2 \
 AM_CFLAGS = 	-Wall \
 		-Wundef \
 		-Wstrict-prototypes \
+                -fno-rtti \
 		-Wno-trigraphs \
+		-fno-use-cxa-atexit \
 		-DLINUX \
+		-D_GLIBCXX_USE_CXX11_ABI=0 \
 		-std=c11 \
 		-I$(COMMON_DIR) \
 		-I${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/ \

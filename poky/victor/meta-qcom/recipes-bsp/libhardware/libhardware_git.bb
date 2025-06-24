@@ -12,6 +12,9 @@ S = "${WORKDIR}/hardware/libhardware"
 
 PR = "r6"
 
+CFLAGS += "-fno-strict-aliasing -fno-tree-vectorize"
+CXXFLAGS += "-fno-strict-aliasing -fno-tree-vectorize"
+
 DEPENDS += "libcutils liblog system-core"
 
 EXTRA_OECONF:append_apq8053 = " --enable-sensors"
