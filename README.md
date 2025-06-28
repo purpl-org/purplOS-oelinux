@@ -12,6 +12,7 @@ This builds the OS, the /anki programs (`purplOS`), and creates a final OTA.
 ## Update notes:
 
 - **06-23-25**: Full rebuild required, sorry. The build script will automatically do this.
+- **06-28-25**: `./build/clean.sh "linux-msm"`
 
 ## Build
 
