@@ -1,16 +1,12 @@
-# wire-os
+# purplOS-oelinux
 
-The main repo for WireOS.
-
-WireOS serves as a nice, stable, and maintained base for Vector CFW.
-
-This builds the OS, the /anki programs (`victor`), and creates a final OTA. This repo can be thought of as `wire-os-oelinux`.
+This builds the OS, the /anki programs (`purplOS`), and creates a final OTA. 
 
 ## Submodules
 
 - /poky/poky -> [yoctoproject/poky](https://github.com/yoctoproject/poky) (walnascar)
 - /poky/meta-openembedded -> [openembedded/meta-openembedded](https://github.com/openembedded/meta-openembedded) (walnascar)
-- /anki/victor -> [wire-os-victor](https://github.com/os-vector/wire-os-victor) (main)
+- /anki/victor -> [purplOS](https://github.com/purpl-org/purplOS) (main)
 - /anki/wired -> [wired](https://github.com/os-vector/wired) (main)
 
 ## Update notes:
@@ -39,8 +35,8 @@ sudo chmod 660 /var/run/docker.sock
 3. Clone and build:
 
 ```
-git clone https://github.com/os-vector/wire-os --recurse-submodules
-cd wire-os
+git clone https://github.com/purpl-org/purplOS-oelinux --recurse-submodules
+cd purplOS-oelinux
 ./build/build.sh -bt <dev/oskr> -bp <boot-passwd> -v <build-increment>
 # boot password not required for dev
 # example: ./build/build.sh -bt dev -v 1
@@ -49,17 +45,13 @@ cd wire-os
 
 ### Where is my OTA?
 
-`./_build/3.0.1.1.ota`
+`./_build/0.3.1.1.ota`
 
 ## Development path
 
 - **Most work should be done in `wire-os-victor`. Generally, that's all you need to have cloned. That can be worked on on a less beefy Linux laptop or M-series MacBook. If you have a modern base WireOS OTA installed; you can clone `wire-os-victor`, make changes, build that standalone, and deploy that to your robot. This repo is more meant to be cloned to a build server, and built less often.**
 
-##  Donate
 
-If you want to :P
-
-[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/kercre123)
 
 ## Differences compared to normal Vector FW
 
