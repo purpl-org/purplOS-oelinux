@@ -1,3 +1,4 @@
+git pull origin main
 cd poky/poky
 git pull origin walnascar
 cd ../../
