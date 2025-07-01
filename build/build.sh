@@ -6,7 +6,7 @@ set -e
 # 1. -au: enable auto-updates
 
 # Hidden env vars:
-# 1. I_AM_THE_CREATOR_AND_WANT_TO_MAKE_THE_BUILD_AUTO_UPDATE: set to 1 if you want to inhibit the -au interaction
+# 1. AUTO_UPDATE: set to 1 if you want to inhibit the -au interaction
 
 CREATOR="Wire"
 
@@ -60,7 +60,7 @@ function check_sign_ota() {
 }
 
 function are_you_wire() {
-	if [[ "${I_AM_THE_CREATOR_AND_WANT_TO_MAKE_THE_BUILD_AUTO_UPDATE}" != "1" ]]; then
+	if [[ "${AUTO_UPDATE}" != "1" ]]; then
 		echo "Are you $CREATOR?"
 		read -p "(y/n): " yn
 		case $yn in
@@ -108,6 +108,11 @@ while [ $# -gt 0 ]; do
     esac
     shift
 done
+
+if [[ "${AUTO_UPDATE}" == "1" ]]; then
+	echo "Build will auto-update (env var set)"
+	AUTO_UPDATE=1
+fi
 
 is_victor_there_and_compatible
 

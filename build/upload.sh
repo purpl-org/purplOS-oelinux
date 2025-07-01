@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function is_au() {
-	if [[ "${I_AM_THE_CREATOR_AND_WANT_TO_MAKE_THE_BUILD_AUTO_UPDATE}" != "1" ]]; then
+	if [[ "${AUTO_UPDATE}" != "1" ]]; then
 		echo "Did you build the OTA with -au?"
 		read -p "(y/n): " yn
 		case $yn in
