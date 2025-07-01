@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Only to be used by froggitti to send OTAs to the purplOS auto-update server
+
 clear
 
 read -p "enter build increment: " inc
