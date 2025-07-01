@@ -7,6 +7,7 @@ IMAGE_INSTALL += "anki-crash-log"
 IMAGE_INSTALL += "anki-robot-target"
 IMAGE_INSTALL += "anki-version"
 IMAGE_INSTALL += "ankiwifi"
+IMAGE_INSTALL += "wipe-all-wifi-configs"
 
 # Victor stuff
 IMAGE_INSTALL += "vic-anim"

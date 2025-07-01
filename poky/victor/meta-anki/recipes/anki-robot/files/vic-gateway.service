@@ -8,7 +8,10 @@ Wants=vic-engine.service vic-cloud.service vic-switchboard.service
 After=vic-gateway-cert.service vic-engine.service vic-cloud.service vic-switchboard.service
 
 [Service]
+PermissionsStartOnly=true
 EnvironmentFile=/anki/etc/vic-gateway.env
+ExecStartPre=/bin/mkdir -p /run/vic-cloud
+ExecStartPre=/bin/chown -R anki:anki /run/vic-cloud
 ExecStart=/usr/bin/logwrapper /anki/bin/vic-gateway $VIC_GATEWAY_OPTS
 ExecStopPost=/anki/bin/vic-on-exit
 Restart=no

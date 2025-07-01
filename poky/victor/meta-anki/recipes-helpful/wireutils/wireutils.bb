@@ -9,6 +9,7 @@ SRC_URI = " \
     file://anki-debug.sh \
     file://ddn.sh \
     file://vmesg.sh \
+    file://reonboard.sh \
 "
 
 S = "${WORKDIR}/sources"
@@ -20,10 +21,12 @@ do_install() {
     install -m 0755 ${S}/anki-debug.sh  ${D}${sbindir}/anki-debug
     install -m 0755 ${S}/ddn.sh         ${D}${sbindir}/ddn
     install -m 0755 ${S}/vmesg.sh	${D}${sbindir}/vmesg
+    install -m 0755 ${S}/reonboard.sh   ${D}${sbindir}/reonboard
 }
 
 FILES:${PN} = "${sbindir}/ddn \
                ${sbindir}/anki-debug \
-               ${sbindir}/vmesg"
+               ${sbindir}/vmesg \
+               ${sbindir}/reonboard"
 
 RDEPENDS:${PN} = "bash"
