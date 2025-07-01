@@ -48,17 +48,22 @@ cd purplOS-oelinux
 `./_build/0.3.1.1.ota`
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> a6bd5ac9ca3d6ece8ccc48f5ea2dd4fc00525bbb
 ## Development path
 
 - **Most work should be done in `wire-os-victor`. Generally, that's all you need to have cloned. That can be worked on on a less beefy Linux laptop or M-series MacBook. If you have a modern base WireOS OTA installed; you can clone `wire-os-victor`, make changes, build that standalone, and deploy that to your robot. This repo is more meant to be cloned to a build server, and built less often.**
 
-##  Donate
 
+<<<<<<< HEAD
 If you want to :P
 
 [![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/kercre123)
 >>>>>>> 837b4347e058528dfd2ad4afda9b6f02d1aa37b5
+=======
+>>>>>>> a6bd5ac9ca3d6ece8ccc48f5ea2dd4fc00525bbb
 
 ## Differences compared to normal Vector FW
 
