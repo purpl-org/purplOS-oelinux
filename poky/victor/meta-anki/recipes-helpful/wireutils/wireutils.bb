@@ -24,6 +24,7 @@ do_install() {
     install -m 0755 ${S}/vmesg.sh	${D}${sbindir}/vmesg
     install -m 0755 ${S}/reonboard.sh   ${D}${sbindir}/reonboard
     install -m 0755 ${S}/temper.sh      ${D}${sbindir}/temper
+    install -m 0755 ${S}/update.sh      ${D}${sbindir}/update
 }
 
 FILES:${PN} = "${sbindir}/ddn \
@@ -31,5 +32,6 @@ FILES:${PN} = "${sbindir}/ddn \
                ${sbindir}/vmesg \
                ${sbindir}/reonboard \
                ${sbindir}/temper"
+               ${sbindir}/update"
 
 RDEPENDS:${PN} = "bash"
