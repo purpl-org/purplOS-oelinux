@@ -1,33 +1,19 @@
-<<<<<<< HEAD
 # purplOS-oelinux
 
-This builds the OS, the /anki programs (`purplOS`), and creates a final OTA. 
-=======
-# WireOS
-
-**The main repo for WireOS.**
-
-WireOS serves as a nice, stable, and maintained base for Vector CFW.
-
-This builds the OS, the /anki programs (`wire-os-victor`), and puts it all into a final OTA. This repo can be thought of as `wire-os-oelinux`.
->>>>>>> e176cacdb07b87d9d188497858bb0f8bf14ef5da
+This builds the OS, the /anki programs (`purplOS`), and puts it all into a final OTA. 
 
 ## Submodules
 
 - /poky/poky -> [yoctoproject/poky](https://github.com/yoctoproject/poky) (walnascar)
 - /poky/meta-openembedded -> [openembedded/meta-openembedded](https://github.com/openembedded/meta-openembedded) (walnascar)
-<<<<<<< HEAD
 - /anki/victor -> [purplOS](https://github.com/purpl-org/purplOS) (main)
-=======
-- /anki/victor -> [wire-os-victor](https://github.com/os-vector/wire-os-victor) (main)
   - Where all the personality code lives - the README there has more info
->>>>>>> e176cacdb07b87d9d188497858bb0f8bf14ef5da
-- /anki/wired -> [wired](https://github.com/os-vector/wired) (main)
+- /anki/wired -> [wired](https://github.com/purpl-org/wired) (main)
   - Little webserver with configuration options
 
 ## Prebuilt OTA:
 
-WireOS is in the dropdown box in [https://devsetup.froggitti.net/](https://devsetup.froggitti.net/). Put your unlocked bot into recovery mode (hold the button for 15 seconds on the charger), head to the site, choose wireOS, then go through the process.
+purplOS-oelinux is in the dropdown box in [https://devsetup.froggitti.net/](https://devsetup.froggitti.net/). Put your unlocked bot into recovery mode (hold the button for 15 seconds on the charger), head to the site, choose purplOS-oelinux, then go through the process.
 
 ## Build
 
@@ -48,8 +34,8 @@ sudo chmod 660 /var/run/docker.sock
 3. Clone and build:
 
 ```
-git clone https://github.com/purpl-org/purplOS-oelinux --recurse-submodules
-cd purplOS-oelinux
+git clone https://github.com/purpl-org/wire-os --recurse-submodules
+cd wire-os
 ./build/build.sh -bt <dev/oskr> -bp <boot-passwd> -v <build-increment>
 # boot password not required for dev
 # example: ./build/build.sh -bt dev -v 1
@@ -58,11 +44,15 @@ cd purplOS-oelinux
 
 ### Where is my OTA?
 
-`./_build/0.3.1.1.ota`
+`./_build/3.0.1.1.ota`
 
 ## Development path
 
-- **Most work should be done in `wire-os-victor`. Generally, that's all you need to have cloned. That can be worked on on a less beefy Linux laptop or M-series MacBook. If you have a modern base WireOS OTA installed; you can clone `wire-os-victor`, make changes, build that standalone, and deploy that to your robot. This repo is more meant to be cloned to a build server, and built less often.**
+- **Most work should be done in `purplOS`. Generally, that's all you need to have cloned. That can be worked on on a less beefy Linux laptop or M-series MacBook. If you have a modern base purplOS-oelinux OTA installed; you can clone `purplOS`, make changes, build that standalone, and deploy that to your robot. This repo is more meant to be cloned to a build server, and built less often.**
+
+##  If you want to Donate to Wire, who made this possible
+
+[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/kercre123)
 
 ## Differences compared to normal Vector FW
 
@@ -93,7 +83,7 @@ cd purplOS-oelinux
 -   OpenCV has been updated to 4.12.0 (latest as of 07-2025)
   	-  Much better SDK streaming performance
 -   [Face overlays](https://www.reddit.com/r/AnkiVector/comments/1lteb3m/_/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
-        -  How to activate: [wire-os-victor PR #17](https://github.com/os-vector/wire-os-victor/pull/17)
+        -  How to activate: [purplOS PR #17](https://github.com/purpl-org/purplOS/pull/17)
 -   Global SSH key: ([ssh_root_key](https://raw.githubusercontent.com/kercre123/unlocking-vector/refs/heads/main/ssh_root_key))
 
 ## Helpful scripts
