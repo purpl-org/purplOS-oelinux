@@ -11,6 +11,7 @@ SRC_URI = " \
     file://vmesg.sh \
     file://reonboard.sh \
     file://temper.sh \
+    file://update.sh \
 "
 
 S = "${WORKDIR}/sources"
@@ -31,7 +32,7 @@ FILES:${PN} = "${sbindir}/ddn \
                ${sbindir}/anki-debug \
                ${sbindir}/vmesg \
                ${sbindir}/reonboard \
-               ${sbindir}/temper"
-               ${sbindir}/update"
+               ${sbindir}/temper \
+               $(sbindir)/update"
 
 RDEPENDS:${PN} = "bash"
