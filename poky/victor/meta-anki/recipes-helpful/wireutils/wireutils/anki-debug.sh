@@ -39,6 +39,7 @@ fi
 echo
 echo "Stopping anki-robot.target..."
 systemctl stop anki-robot.target
+sleep 3
 echo "Reloading daemons..."
 systemctl daemon-reload
 echo "Starting anki-robot.target..."

@@ -10,6 +10,7 @@ SRC_URI = " \
     file://ddn.sh \
     file://vmesg.sh \
     file://reonboard.sh \
+    file://temper.sh \
 "
 
 S = "${WORKDIR}/sources"
@@ -22,11 +23,13 @@ do_install() {
     install -m 0755 ${S}/ddn.sh         ${D}${sbindir}/ddn
     install -m 0755 ${S}/vmesg.sh	${D}${sbindir}/vmesg
     install -m 0755 ${S}/reonboard.sh   ${D}${sbindir}/reonboard
+    install -m 0755 ${S}/temper.sh      ${D}${sbindir}/temper
 }
 
 FILES:${PN} = "${sbindir}/ddn \
                ${sbindir}/anki-debug \
                ${sbindir}/vmesg \
-               ${sbindir}/reonboard"
+               ${sbindir}/reonboard \
+               ${sbindir}/temper"
 
 RDEPENDS:${PN} = "bash"

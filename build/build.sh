@@ -144,6 +144,7 @@ echo "All checks passed. Building."
 mkdir -p build/cache
 mkdir -p build/gocache
 mkdir -p build/usercache
+mkdir -p anki-deps
 
 rm -rf poky/build/tmp-glibc/deploy/images/apq8009-robot-robot-perf/apq8009-robot-sysfs.ext4
 
