@@ -39,12 +39,12 @@ cd wire-os
 ./build/build.sh -bt <dev/oskr> -bp <boot-passwd> -v <build-increment>
 # boot password not required for dev
 # example: ./build/build.sh -bt dev -v 1
-# <build-increment> is what the last number of the version string will be - if it's 1, it will be 3.0.1.1.ota
+# <build-increment> is what the last number of the version string will be - if it's 1, it will be 0.3.1.1.ota
 ```
 
 ### Where is my OTA?
 
-`./_build/3.0.1.1.ota`
+`./_build/0.3.1.1.ota`
 
 ## Development path
 
