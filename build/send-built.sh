@@ -15,19 +15,19 @@ eval `ssh-agent`
 ssh-add "$KEY_PATH"
 
 echo Touch auto update inhibitor
-ssh -p 23 root@froggitti.net 'touch /wire/otas/dnar'
+ssh -p 23 root@froggitti.net 'touch /wire/otas/dnar && wall Inhibitor added.'
 sleep 1s
 
 echo Remove old latest file
-ssh -p 23 root@froggitti.net 'rm /wire/otas/latest'
+ssh -p 23 root@froggitti.net 'rm /wire/otas/latest && wall Latest file removed.'
 sleep 1s
 
 echo Make new latest file
-ssh -p 23 root@froggitti.net 'touch /wire/otas/latest'
+ssh -p 23 root@froggitti.net 'touch /wire/otas/latest && wall Latest file created.'
 sleep 1s
 
 echo Echo new version number to new latest file
-ssh -p 23 root@froggitti.net "echo 0.3.1.$INCREMENT /wire/otas/latest"
+ssh -p 23 root@froggitti.net "echo 0.3.1.$INCREMENT /wire/otas/latest && wall Latest file updated."
 sleep 1s
 
 echo Copy Dev OTA
@@ -45,6 +45,8 @@ ssh -p 23 root@froggitti.net "cp /wire/otas/full/oskr/0.3.1."$INCREMENT".ota /wi
 echo Remove auto update inhibitor
 ssh -p 23 root@froggitti.net 'rm /wire/otas/dnar'
 sleep 1s
+
+ssh -p 23 root@froggitti.net 'cat /wire/otas/latest'
 
 echo Done.
 
