@@ -36,7 +36,7 @@ ssh -p 23 root@froggitti.net 'touch /wire/otas/latest'
 sleep 1s
 
 echo Echo new version number to new latest file
-ssh -p 23 root@froggitti.net "echo 0.3.1.$INCREMENT /wire/otas/latest"
+ssh -p 23 root@froggitti.net "echo 0.3.1.$INCREMENT > /wire/otas/latest"
 sleep 1s
 
 echo Copy Dev OTA
