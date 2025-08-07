@@ -29,7 +29,7 @@ EXTRA_IMAGE_FEATURES += "read-only-rootfs"
 
 TARGET_NUM = "${@('0' if d.getVar('DEV') == '1' else '1' if d.getVar('OSKR') == '1' else '9' if d.getVar('USER_BUILD') == '1' else '0')}"
 
-WHAT_OS_AM_I = "purplOS_purpl_org"
+WHAT_OS_AM_I = "purplOS_purpl-org"
 
 gen_buildprop:append() {
    mkdir -p ${IMAGE_ROOTFS}/cache
