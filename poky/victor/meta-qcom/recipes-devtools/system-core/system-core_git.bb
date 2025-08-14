@@ -8,7 +8,7 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://system/core"
-S = "${WORKDIR}/system/core"
+S = "${UNPACKDIR}/system/core"
 
 PR = "r19"
 
