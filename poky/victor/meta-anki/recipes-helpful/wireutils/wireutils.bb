@@ -13,8 +13,8 @@ SRC_URI = " \
     file://temper.sh \
 "
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
+#UNPACKDIR = "${S}"
 
 do_install() {
     install -d ${D}${sbindir}

@@ -30,6 +30,7 @@ esac
 export PATH PS1 OPIEDIR QPEDIR QTDIR EDITOR TERM
 
 alias ls="ls --color=auto"
+alias btop="btop --force-utf"
 alias grep='grep --color=auto'
 alias recovery="/sbin/reboot recovery & exit"
 alias neofetch="neofetch --no_config --ascii_colors 2 --ascii /etc/vector-ascii"

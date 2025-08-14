@@ -8,8 +8,8 @@ AVAHI_SERVICE_FILE = "vector-mdns.service"
 
 SRC_URI = "file://${SERVICE_FILE}"
 SRC_URI += "file://${AVAHI_SERVICE_FILE}"
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
+#UNPACKDIR = "${S}"
 
 inherit systemd
 

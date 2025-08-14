@@ -9,7 +9,7 @@ RDEPENDS:${PN} = "python3"
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://anki/rebooter/"
 
-S = "${WORKDIR}/anki/rebooter"
+S = "${UNPACKDIR}/anki/rebooter"
 SYSTEM_DIR = "${D}${sysconfdir}/systemd/system"
 
 do_compile() {

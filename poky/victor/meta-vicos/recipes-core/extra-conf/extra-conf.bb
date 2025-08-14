@@ -13,8 +13,8 @@ SRC_URI = "file://initscripts \
 	   file://other \
            file://rsync"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
+#UNPACKDIR = "${S}"
 
 do_install () {
 	install -d ${D}/etc/initscripts
