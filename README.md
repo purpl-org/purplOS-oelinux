@@ -1,4 +1,4 @@
-# Wire
+# purplOS-oelinux
 
 This builds the OS, the /anki programs (`purplOS`), and puts it all into a final OTA.
 
