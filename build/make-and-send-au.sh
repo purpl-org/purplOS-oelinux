@@ -2,6 +2,8 @@
 
 # Only to be used by froggitti for purplOS auto-updates
 
+./update.sh
+
 clear
 
 read -p "Enter build increment: " inc
