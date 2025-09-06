@@ -12,5 +12,5 @@ cd anki/vic-cloudless
 git pull origin main
 cd ../../
 cd anki/victor 
-git pull origin main
+git pull --no-recurse-submodules origin main
 cd ../../
