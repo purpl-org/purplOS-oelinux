@@ -25,8 +25,9 @@ IMAGE_INSTALL += "vic-webserver"
 IMAGE_INSTALL += "vic-bootanim"
 IMAGE_INSTALL += "victor"
 
-# Wire thing
+# Wire things
 IMAGE_INSTALL += "wired"
+IMAGE_INSTALL += "libpvictor"
 
 IMAGE_INSTALL += "avahi-daemon"
 IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'neofetch', d)}"
@@ -48,6 +49,7 @@ IMAGE_INSTALL += "python3-crypt"
 IMAGE_INSTALL += "python3-pkgutil"
 IMAGE_INSTALL += "python3-numbers"
 IMAGE_INSTALL += "python3-six"
+
 IMAGE_INSTALL += "python3-protobuf"
 IMAGE_INSTALL += "paycheck"
 

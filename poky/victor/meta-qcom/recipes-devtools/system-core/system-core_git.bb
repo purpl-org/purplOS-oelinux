@@ -30,7 +30,7 @@ PROVIDES += "libsysutils logwrapper adb logd usb"
 EXTRA_OECONF = " --with-host-os=${HOST_OS} --with-glib"
 EXTRA_OECONF:append = " --with-sanitized-headers=${STAGING_KERNEL_BUILDDIR}/usr/include"
 EXTRA_OECONF:append = " --with-logd-logging"
-#EXTRA_OECONF:append = " --disable-debuggerd"
+EXTRA_OECONF:append = " --disable-debuggerd"
 EXTRA_OECONF:append = " ${@bb.utils.contains('DISTRO_FEATURES', 'nad-stream-update', '--enable-libfsmgr', '', d)}"
 
 #Disable default libsync in system/core for 4.4 above kernels
