@@ -29,10 +29,17 @@ esac
 
 export PATH PS1 OPIEDIR QPEDIR QTDIR EDITOR TERM
 
+function reboot() {
+    /sbin/reboot $1 &
+    exit
+}
+
 alias ls="ls --color=auto"
 alias btop="btop --force-utf"
 alias grep='grep --color=auto'
 alias recovery="/sbin/reboot recovery & exit"
 alias neofetch="neofetch --no_config --ascii_colors 2 --ascii /etc/vector-ascii"
+alias voff="voff && exit"
+alias mrw="mount -o rw,remount /"
 
 umask 022

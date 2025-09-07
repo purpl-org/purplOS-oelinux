@@ -4,7 +4,7 @@ HOMEPAGE = "https://github.com/os-vector/libpvictor"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=0eeb98f19a3068438a3d66106c9c9429"
 
-SRCREV = "7924c6dfd8dd282d5438c057c198389482763fb5"
+SRCREV = "65339fa6c5406eeda633a3f0d556ee6261ffc49a"
 SRC_URI = "git://github.com/os-vector/libpvictor;branch=main;protocol=https"
 
 inherit cmake
