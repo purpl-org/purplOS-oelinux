@@ -31,7 +31,7 @@ IMAGE_INSTALL += "wpa-supplicant"
 IMAGE_INSTALL += "extra-conf"
 IMAGE_INSTALL += "update-engine"
 IMAGE_INSTALL += "bash"
-IMAGE_INSTALL += "python3"
+#IMAGE_INSTALL += "python3"
 IMAGE_INSTALL += "libgomp"
 
 IMAGE_INSTALL += "libunwind"
