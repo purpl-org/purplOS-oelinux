@@ -14,3 +14,9 @@ cd ../../
 cd anki/victor 
 git pull --no-recurse-submodules origin main
 cd ../../
+
+git add .
+
+git commit -m "Update Submodules (Performed by automated script)"
+
+git push origin main
