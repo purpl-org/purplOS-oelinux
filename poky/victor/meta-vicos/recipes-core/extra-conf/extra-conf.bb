@@ -23,6 +23,7 @@ do_install () {
 	install -d ${D}/usr/sbin
 	install -m 0755 ${S}/other/export-gpio ${D}/usr/sbin/export-gpio
 	install -m 0755 ${S}/other/set-timezone ${D}/usr/sbin/set-timezone
+        install -m 0755 ${S}/other/btop.conf ${D}/etc/btop.conf
 	cp -r ${S}/initscripts/* ${D}/etc/initscripts/
 	chmod 0755 ${D}/etc/initscripts/*
 	cp -r ${S}/services/* ${D}/usr/lib/systemd/system/
@@ -44,6 +45,7 @@ FILES:${PN} = "	/usr/lib/systemd/system \
 		/etc/initscripts \
 		/usr/sbin/export-gpio \
 		/usr/sbin/set-timezone \
+		/etc/btop.conf \
 		/etc/rsyncd-victor.conf"
 
 RDEPENDS:${PN} = "bash"

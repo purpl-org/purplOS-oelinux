@@ -257,7 +257,6 @@ anki/bin/vic-crashuploader        ${UID_NET}    ${GID_ANKI} 0550
 anki/bin/vic-dasmgr               ${UID_NET}    ${GID_ANKI} 0500
 anki/bin/vic-engine               ${UID_ENGINE} ${GID_ANKI} 0500
 anki/bin/vic-faultCodeDisplay     ${UID_ANKI}   ${GID_ANKI} 0550
-anki/bin/vic-gateway              ${UID_NET}    ${GID_ANKI} 0500
 anki/bin/vic-getprocessstatus.sh  ${UID_ANKI}   ${GID_ANKI} 0550
 anki/bin/vic-init.sh              ${UID_ANKI}   ${GID_ANKI} 0550
 anki/bin/vic-log-cat              ${UID_ANKI}   ${GID_ANKI} 0550

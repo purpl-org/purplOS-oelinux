@@ -63,11 +63,11 @@ cd purplOS-oelinux
 -   Picovoice Porcupine (1.5) wakeword engine
     -   Custom wake words in :8080 webserver!
 -   `htop` and `rsync` are embedded
--   Python 3.13 rather than Python 2
+-   No more Python - update-engine was rewritten in C++
 -   General bug fixes - for instance, now he won't read the EMR partition upon every single screen draw (DDL bug)
 -   :8080 webserver for configuring things I don't want to integrate into a normal app
 -   Cat and dog detection (basic, similar to Cozmo)
--   Smaller OTA size - a dev OTA is 171M somehow
+-   Smaller OTA size - a dev OTA is 153M somehow
 -   New Anki boot animation, new pre-boot-anim splash screen, rainbow backpack light animations
 -   TensorFlow Lite has been updated to v2.19.0 (latest as of 07-2025)
 	-  This means we can maybe leverage the GPU delegate at some point
