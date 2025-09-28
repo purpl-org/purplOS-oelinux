@@ -2,6 +2,16 @@
 
 This builds the OS, the /anki programs (`purplOS`), and puts it all into a final OTA.
 
+## Vector
+
+[Vector is a cute, animated home robot created by Anki](https://www.youtube.com/watch?v=oxla4__lWbA). They went under in 2019. The assets were bought up by Digital Dream Labs in 2020. Eventually, Vector's code leaked, and soon after that, a universal Vector unlocking tool was made available.
+
+## Yocto
+
+Yocto is the toolkit this repo uses to create OS images. Yocto, in of itself, is not a distribution. It's a toolkit which helps one create replicable OS builds with only little difficulty.
+
+This is based off of the leaked [vicos-oelinux](https://github.com/kercre123/vicos-oelinux). Qualcomm provided Anki with a Yocto BSP - that's what that is. It is terribly old. I updated everything so it works with the latest Yocto tools.
+
 ## Submodules
 
 - /poky/poky -> [yoctoproject/poky](https://github.com/yoctoproject/poky) (master)
@@ -42,7 +52,25 @@ cd purplOS-oelinux
 # <build-increment> is what the last number of the version string will be - if it's 1, it will be 0.3.2.1.ota
 ```
 
+<<<<<<< HEAD
 ##  Donate to Wire, who is making this possible
+=======
+### Where is my OTA?
+
+`./_build/3.0.1.1.ota`
+
+## Development path
+
+- **Most work should be done in `wire-os-victor`. Generally, that's all you need to have cloned. That can be worked on on a less beefy Linux laptop or M-series MacBook. If you have a modern base WireOS OTA installed; you can clone `wire-os-victor`, make changes, build that standalone, and deploy that to your robot. This repo is more meant to be cloned to a build server, and built less often.**
+
+## Rebuilds
+
+- I try to make it so whenever changes are made, you don't need to do a full rebuild; however, due to this being synced up to poky's `master` branch, behavior can be unpredictable. **Due to this, I recommend doing a full rebuild each time.** You can clean your build directory by running `sudo rm -rf poky/build/tmp-glibc poky/build/cache poky/build/sstate-cache poky/build/downloads`.
+
+##  Donate
+
+If you want to :P
+>>>>>>> 0c407542df72b3b34529d2ac1aa7e103c3287b1d
 
 [![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/kercre123)
 
@@ -85,7 +113,7 @@ cd purplOS-oelinux
 -	`reonboard`
 	-	Puts him back into onboarding mode without fully clearing user data
 -	`vmesg [-c|-t] <grep args>`
-	-	A wrapper for cat/tail /var/log/messages:
+	-	A wrapper for cat/tail /var/log/messages.
 -	`temper`
 	-	Simple script which tells you CPU temps
 -	`voff`
@@ -93,15 +121,6 @@ cd purplOS-oelinux
 		-	(the shutdown command just restarts the bot, this is different)
 -	`mrw`
 	-	mount -o rw,remount /
-
-```
-usage: vmesg [-t|-c] <grep args>
-this is a helper tool for viewing Vector's /var/log/messages
-if no grep args are provided, the tailed/whole log will be given
--t = tail (-f), -c = cat
-example for searching: vmesg -t -i "tflite\|gpu"
-example for whole log: vmesg -c
-```
 
 ## Proprietary software notes
 
