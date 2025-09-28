@@ -24,7 +24,7 @@ IMAGE_INSTALL += "ip6tables-persistent"
 #IMAGE_INSTALL += "rng-tools"
 
 IMAGE_INSTALL += "alsa-utils"
-IMAGE_INSTALL += "dhcpcd"
+#IMAGE_INSTALL += "dhcpcd"
 IMAGE_INSTALL += "openssl-bin"
 IMAGE_INSTALL += "emr-cat"
 IMAGE_INSTALL += "wpa-supplicant"
