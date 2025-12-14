@@ -56,8 +56,9 @@
   )
   AM_CONDITIONAL(X86_64, [test "x$X86_64" = "xyes"])
 
-  AM_CONDITIONAL(BUILD_HOST, [test "x$X86_64" = "xyes"])
-  AM_CONDITIONAL(BUILD_DEVICE, [test "x$ARM$ARM64" != "xnono"])
+  AM_CONDITIONAL([BUILD_HOST], [test "x$ARM64" = "xyes" || test "x$X86_64" = "xyes"])
+  AM_CONDITIONAL([BUILD_DEVICE], [test "x$ARM" = "xyes"])
+
 
 
 AC_OUTPUT([ \

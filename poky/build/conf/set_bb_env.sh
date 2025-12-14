@@ -76,7 +76,7 @@ function setenv-8009-robot-image() {
 
 function build-8009-robot-image() {
   setenv-8009-robot-image
-  cdbitbake machine-robot-image
+  cdbitbake ${@} machine-robot-image
 }
 
 function build-8009-robot-facdev-image() {
@@ -86,7 +86,7 @@ function build-8009-robot-facdev-image() {
   export VARIANT=perf
   #export PRODUCT=robot
   export FACTORY="1"
-  cdbitbake machine-robot-image
+  cdbitbake ${@} machine-robot-image
 }
 
 function build-8009-robot-perf-image() {
@@ -95,7 +95,7 @@ function build-8009-robot-perf-image() {
   export DISTRO=msm-perf
   export VARIANT=perf
   export PRODUCT=robot
-  cdbitbake machine-robot-image
+  cdbitbake ${@} machine-robot-image
 }
 
 function build-8009-robot-perf-cloudless-image() {
@@ -105,7 +105,7 @@ function build-8009-robot-perf-cloudless-image() {
   export VARIANT=perf
   export PRODUCT=robot
   export CLOUDLESS=1
-  cdbitbake machine-robot-image
+  cdbitbake ${@} machine-robot-image
 }
 
 function build-8009-robot-oskr-image() {
@@ -115,7 +115,7 @@ function build-8009-robot-oskr-image() {
   export VARIANT=perf
   export PRODUCT=robot
   export OSKR=1
-  cdbitbake machine-robot-image
+  cdbitbake ${@} machine-robot-image
 }
 
 function build-8009-robot-user-image() {
@@ -124,7 +124,7 @@ function build-8009-robot-user-image() {
   export DISTRO=msm-user
   export VARIANT=perf
   export PRODUCT=robot
-  cdbitbake machine-robot-image
+  cdbitbake ${@} machine-robot-image
 }
 
 function build-8009-robot-userdev-image() {
@@ -134,7 +134,7 @@ function build-8009-robot-userdev-image() {
   export VARIANT=perf
   #export PRODUCT=robot
   export DEV="1"
-  cdbitbake machine-robot-image
+  cdbitbake ${@} machine-robot-image
 }
 
 function build-8009-robot-beta-image() {
@@ -145,7 +145,7 @@ function build-8009-robot-beta-image() {
   #export PRODUCT=robot
   export DEV="1"
   export BETA="1"
-  cdbitbake machine-robot-image
+  cdbitbake ${@} machine-robot-image
 }
 
 function build-8009-robot-factory-image() {
@@ -155,7 +155,7 @@ function build-8009-robot-factory-image() {
   export VARIANT=perf
   #export PRODUCT=robot
   export FACTORY="1"
-  cdbitbake machine-robot-image
+  cdbitbake ${@} machine-robot-image
 }
 
 build-all-8009-robot-images() {
@@ -164,7 +164,7 @@ build-all-8009-robot-images() {
 }
 
 function build-victor-robot-image() {
-  build-8009-robot-image
+  build-8009-robot-image ${@}
 }
 
 function build-victor-robot-image-incremental() {
@@ -175,47 +175,47 @@ function build-victor-robot-image-incremental() {
 }
 
 function build-victor-robot-perf-image() {
-  build-8009-robot-perf-image
+  build-8009-robot-perf-image ${@}
 }
 
 function build-victor-robot-oskr-image() {
-  build-8009-robot-oskr-image
+  build-8009-robot-oskr-image ${@}
 }
 
 function build-victor-robot-user-image() {
-  build-8009-robot-user-image
+  build-8009-robot-user-image ${@}
 }
 
 function build-victor-robot-factory-image() {
-  build-8009-robot-factory-image
+  build-8009-robot-factory-image ${@}
 }
 
 function build-victor-robot-facdev-image() {
-  build-8009-robot-facdev-image
+  build-8009-robot-facdev-image ${@}
 }
 
 function build-victor-robot-userdev-image() {
-  build-8009-robot-userdev-image
+  build-8009-robot-userdev-image ${@}
 }
 
 function build-victor-robot-beta-image() {
-  build-8009-robot-beta-image
+  build-8009-robot-beta-image ${@}
 }
 
 function build-oskr() {
-  build-victor-robot-oskr-image
+  build-victor-robot-oskr-image ${@}
 }
 
 function build-dev() {
-  build-victor-robot-perf-image
+  build-victor-robot-perf-image ${@}
 }
 
 function build-devcloudless() {
-  build-8009-robot-perf-cloudless-image
+  build-8009-robot-perf-cloudless-image ${@}
 }
 
 function build-prod() {
-  build-victor-robot-user-image
+  build-victor-robot-user-image ${@}
 }
 
 # cleared every time
@@ -229,7 +229,7 @@ function clean-oskr() {
   export PRODUCT=robot
   export OSKR=1
   wire-clean
-  cdbitbake -c cleanall ${cleanList[@]}
+  cdbitbake ${@} -c cleanall ${cleanList[@]}
 }
 
 function clean-dev() {
@@ -239,7 +239,7 @@ function clean-dev() {
   export VARIANT=perf
   export PRODUCT=robot
   wire-clean
-  cdbitbake -c cleanall ${cleanList[@]}
+  cdbitbake ${@} -c cleanall ${cleanList[@]}
 }
 
 function clean-devcloudless() {
@@ -250,7 +250,7 @@ function clean-devcloudless() {
   export PRODUCT=robot
   export CLOUDLESS=1
   wire-clean
-  cdbitbake -c cleanall ${cleanList[@]} vic-cloudless
+  cdbitbake ${@} -c cleanall ${cleanList[@]} vic-cloudless
 }
 
 function clean-prod() {
@@ -260,13 +260,13 @@ function clean-prod() {
   export VARIANT=perf
   export PRODUCT=robot
   wire-clean
-  cdbitbake -c cleanall ${cleanList[@]}
+  cdbitbake ${@} -c cleanall ${cleanList[@]}
 }
 
 function wire-clean() {
 	if [[ -f ${WS}/wire-cleaning ]]; then
 		echo "Cleaning file detected, cleaning: $(cat ${WS}/wire-cleaning)"
-		cdbitbake -c cleanall $(cat ${WS}/wire-cleaning)
+		cdbitbake -c cleanall ${@} $(cat ${WS}/wire-cleaning)
 		rm -f ${WS}/wire-cleaning
 	fi
 	if [[ -d "${WS}/poky/build/downloads" ]]; then
@@ -301,15 +301,10 @@ list-build-commands()
 {
     echo
     echo "Convenience commands for building Victor images:"
-    local script_file="$WS/poky/build/conf/set_bb_env.sh"
-
-    while IFS= read line; do
-        if echo $line | grep -q "^function[[:blank:]][[:blank:]]*build-victor"; then
-            local delim_string=$(echo $line | cut -d'(' -f1)
-            echo "   $(echo $delim_string|awk -F "[[:blank:]]*" '{print $2}')"
-        fi
-    done < $script_file
-
+    echo "  build-dev"
+    echo "  build-oskr"
+    echo "  build-devcloudless"
+    echo "  build-prod"
     echo
     echo "Use 'list-build-commands' to see this list again."
     echo
@@ -338,7 +333,7 @@ export TEMPLATECONF="${WS}/poky/victor/meta-qcom/conf/templates/msm"
 # going to source the OE build environment setup script they provided.
 # This will dump the user in ${WS}/yocto/build, ready to run the
 # convienence function or straight up bitbake commands.
-. ${WS}/poky/poky/oe-init-build-env
+. ${WS}/poky/openembedded-core/oe-init-build-env
 
 # Let bitbake use the following env-vars as if they were pre-set bitbake ones.
 # (BBLAYERS is explicitly blocked from this within OE-Core itself, though...)

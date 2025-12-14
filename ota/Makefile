@@ -72,7 +72,7 @@ $(BUILD)/%.img: $(IMG_DIR)/%.img
 
 %.img.gz: %.img
 	echo "Compressing $<..."
-	./pigz/amd64/pigz $(GZIP_MODE) --force --keep $<
+	./pigz/compress.sh $(GZIP_MODE) --force --keep $<
 
 %.img.gz.enc: %.img.gz
 	openssl aes-256-ctr -pass $(OTAPASS) -md md5 -in $< -out $@ > /dev/null 2> /dev/null

@@ -41,9 +41,10 @@ IMAGE_INSTALL += "liburcu"
 #IMAGE_INSTALL += "ankiprofile"
 
 # dev-only things
+IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'htop', d)}"
 IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'nano', d)}"
 IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'rsync', d)}"
-IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'htop', d)}"
+IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'vim-tiny', d)}"
 
 # all the HAL stuff
 IMAGE_INSTALL += "audiohal"

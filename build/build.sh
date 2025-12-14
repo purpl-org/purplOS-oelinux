@@ -14,13 +14,14 @@ CURRENT_CONTAINER_NAME="vic-yocto-builder-7"
 
 function usage() {
     echo "$1"
-    echo "Usage: ./build/build.sh -bt <dev/oskr/devcloudless> -s -op <OTA-pw> -bp <boot-passwd> -v <build-increment>"
-    echo "Usage (no signing): ./build/build.sh -bt <dev/oskr/devcloudless> -bp <boot-passwd> -v <build-increment>"
+    echo "Usage: ./build/build.sh -bt <dev/oskr/devcloudless> -s -op <OTA-pw> -bp <boot-passwd> -v <build-increment> -ui <ui-option>"
+    echo "Usage (no signing): ./build/build.sh -bt <dev/oskr/devcloudless> -bp <boot-passwd> -v <build-increment> -ui <ui-option>"
+    echo "Valid UI options are: knotty, ncurses, taskexp_ncurses, or teamcity. Default is knotty."
     exit 1
 }
 
-if [[ ! "$(uname -a)" == *"Linux"* ]] || [[ ! "$(uname -a)" == *"x86_64"* ]]; then
-	echo "This is not x86_64/amd64 Linux. Exiting."
+if [[ ! "$(uname -a)" == *"Linux"* ]] || [[ ! "$(uname -a)" == *"x86_64"* && ! "$(uname -a)" == *"aarch64"* ]]; then
+	echo "This is not x86_64/amd64 or aarch64/arm64 Linux. Exiting."
 	exit 1
 fi
 
@@ -93,6 +94,20 @@ function is_victor_there_and_compatible() {
 	echo "OELinux and victor compat versions are the same"
 }
 
+#knotty, ncurses, taskexp_ncurses or teamcity - default knotty
+function what_ui() {
+    GIVEN_UI="$1"
+    if [[ "${GIVEN_UI}" != "knotty" && "${GIVEN_UI}" != "ncurses" && "${GIVEN_UI}" != "taskexp" && "${GIVEN_UI}" != "taskexp_ncurses" && "${GIVEN_UI}" != "teamcity" ]]; then
+        errorMsg "Invalid UI option: ${GIVEN_UI}"
+        usage
+    fi
+    if [[ "${GIVEN_UI}" == *"taskexp"* ]]; then
+        UI_FLAG="-g -u ${GIVEN_UI}"
+    else
+        UI_FLAG="-u ${GIVEN_UI}"
+    fi
+}
+
 while [ $# -gt 0 ]; do
     case "$1" in
         -bt) BOT_TYPE="$2"; shift ;;
@@ -101,6 +116,8 @@ while [ $# -gt 0 ]; do
         -s) DO_SIGN=1 ;;
         -v) BUILD_INCREMENT="$2"; shift ;;
         -au) are_you_wire; AUTO_UPDATE=1 ;;
+        -ui) what_ui "$2"; shift ;;
+        -nd) NO_DOCKER=1 ;;
         *)
             usage "unknown option: $1"
             exit 1 ;;
@@ -139,6 +156,11 @@ if [[ ! $BUILD_INCREMENT =~ ^-?[0000-9999]+$ ]]; then
     usage "Build increment is not an int between 0-9999."
 fi
 
+if [[ "${NO_DOCKER}" != "1" && "$(uname -a)" == *"aarch64" ]]; then
+    errorMsg "Docker building does not work on aarch64. Follow the steps for building on bare metal."
+    exit 1
+fi
+
 echo "All checks passed. Building."
 
 mkdir -p build/cache
@@ -158,12 +180,12 @@ function cleanMsg() {
 
 function buildMsg() {
 	echo
-        echo -e "\e[1;32mBuilding the OS...\e[0m"
+    echo -e "\e[1;32mBuilding the OS...\e[0m"
 	echo
 }
 
-YOCTO_CLEAN_COMMAND="echo -e \"\e[1;32mCleaning some recipes...\e[0m\" && echo && clean-${BOT_TYPE}"
-YOCTO_BUILD_COMMAND="echo && echo -e \"\e[1;32mBuilding the OS...\e[0m\" && echo && build-${BOT_TYPE}"
+YOCTO_CLEAN_COMMAND="echo -e \"\e[1;32mCleaning some recipes...\e[0m\" && echo && clean-${BOT_TYPE} ${UI_FLAG}"
+YOCTO_BUILD_COMMAND="echo && echo -e \"\e[1;32mBuilding the OS...\e[0m\" && echo && build-${BOT_TYPE} ${UI_FLAG}"
 
 echo "Building a $BOT_TYPE OTA"
 export BOOT_IMAGE_SIGNING_PASSWORD="${BOOT_PASSWORD}"
@@ -171,14 +193,14 @@ export BOOT_IMAGE_SIGNING_PASSWORD="${BOOT_PASSWORD}"
 ANKIDEV=1
 
 if [[ $BOT_TYPE == "oskr" ]]; then
-        export BOOT_IMAGE_SIGNING_PASSWORD="${BOOT_PASSWORD}"
+    export BOOT_IMAGE_SIGNING_PASSWORD="${BOOT_PASSWORD}"
 	BOOT_MAKE_COMMAND="make oskrsign"
 elif [[ $BOT_TYPE == "prod" ]]; then
-        export BOOT_IMAGE_SIGNING_PASSWORD="${BOOT_PASSWORD}"
+    export BOOT_IMAGE_SIGNING_PASSWORD="${BOOT_PASSWORD}"
 	BOOT_MAKE_COMMAND="make prodsign"
 	ANKIDEV=0
 elif [[ $BOT_TYPE == "devcloudless" ]]; then
-        BOOT_MAKE_COMMAND="make devsign"
+    BOOT_MAKE_COMMAND="make devsign"
 else
 	BOOT_MAKE_COMMAND="make devsign"
 fi
@@ -188,33 +210,25 @@ if [[ $DO_SIGN == 1 ]]; then
     export DO_SIGN=$DO_SIGN
 fi
 
-# if [[ ! -z $(docker images -q ${OLD_CONTAINER_NAME}) ]]; then
-# 	echo "Purging old docker containers... this might take a while"
-# 	docker ps -a --filter "ancestor=${OLD_CONTAINER_NAME}" -q | xargs -r docker rm -f
-# 	docker rmi -f $(docker images --filter "reference=${OLD_CONTAINER_NAME}*" --format '{{.ID}}')
-# 	#echo
-# 	#echo -e "\033[5m\033[1m\033[31mOld Docker builder detected on system. If you have built victor or wire-os many times, it is recommended you run:\033[0m"
-# 	#echo
-# 	#echo -e "\033[1m\033[36mdocker system prune -a --volumes\033[0m"
-# 	#echo
-# 	#echo -e "\033[32mPrevious versions of wire-os did not include a --rm flag in the docker run command. This means you probably have wasted space which can be cleared out with the above command.\033[0m"
-# 	#echo -e "\033[32mContinuing in 10 seconds...\033[0m"
-# 	#sleep 10
-# fi
-
-if [[ -z $(docker images -q ${CURRENT_CONTAINER_NAME}) ]]; then
-	docker build --build-arg DIR_PATH="${DIRPATH}" --build-arg USER_NAME=$USER --build-arg UID=$(id -u $USER) --build-arg GID=$(id -u $USER) -t ${CURRENT_CONTAINER_NAME} build/
-else
-	echo "Reusing ${CURRENT_CONTAINER_NAME}"
+if [[ "${NO_DOCKER}" != "1" ]]; then
+    if [[ -z $(docker images -q ${CURRENT_CONTAINER_NAME}) ]]; then
+        docker build --build-arg DIR_PATH="${DIRPATH}" --build-arg USER_NAME=$USER --build-arg UID=$(id -u $USER) --build-arg GID=$(id -u $USER) -t ${CURRENT_CONTAINER_NAME} build/
+    else
+        echo "Reusing ${CURRENT_CONTAINER_NAME}"
+    fi
 fi
-docker run -it --rm \
+
+function run_with_docker() {
+    docker run -it --rm \
     -v $(pwd)/anki-deps:/home/$USER/.anki \
     -v $(pwd):$(pwd) \
     -v $(pwd)/build/cache:/home/$USER/.ccache \
     -v $(pwd)/build/gocache:/home/$USER/go \
     -v $(pwd)/build/usercache:/home/$USER/.cache \
-    ${CURRENT_CONTAINER_NAME} bash -c \
-    "cd $(pwd)/poky && \
+    ${CURRENT_CONTAINER_NAME} bash -c "$@"
+}
+
+FINAL_BUILD_INVOCATION="cd $(pwd)/poky && \
     source build/conf/set_bb_env.sh && \
     export ANKI_BUILD_VERSION=$BUILD_INCREMENT && \
     export AUTO_UPDATE=${AUTO_UPDATE} && \
@@ -228,6 +242,12 @@ docker run -it --rm \
     export BOOT_IMAGE_SIGNING_PASSWORD=${BOOT_PASSWORD} && \
     ${BOOT_MAKE_COMMAND} && \
     ANKIDEV=${ANKIDEV} make"
+
+if [[ ${NO_DOCKER} == "1" ]]; then
+    bash -c "${FINAL_BUILD_INVOCATION}"
+else
+    run_with_docker "${FINAL_BUILD_INVOCATION}"
+fi
 
 echo
 echo -e "\033[1;32mCompleted successfully. Output is in ./_build.\033[0m"

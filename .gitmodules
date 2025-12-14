@@ -1,17 +1,19 @@
-[submodule "poky/poky"]
-	path = poky/poky
-	url = https://github.com/yoctoproject/poky
-	branch = master
+[submodule "anki/victor"]
+	path = anki/victor
+	url = https://github.com/os-vector/wire-os-victor
 [submodule "poky/meta-openembedded"]
 	path = poky/meta-openembedded
 	url = https://github.com/openembedded/meta-openembedded
-	branch = master
+	branch = walnascar
 [submodule "anki/wired"]
 	path = anki/wired
-	url = https://github.com/purpl-org/wired
+	url = https://github.com/os-vector/wired
 [submodule "anki/vic-cloudless"]
 	path = anki/vic-cloudless
 	url = https://github.com/kercre123/vic-cloudless
-[submodule "anki/victor"]
-	path = anki/victor
-	url = https://github.com/purpl-org/purplOS
+[submodule "poky/bitbake"]
+	path = poky/bitbake
+	url = https://github.com/openembedded/bitbake.git
+[submodule "poky/openembedded-core"]
+	path = poky/openembedded-core
+	url = https://github.com/openembedded/openembedded-core.git

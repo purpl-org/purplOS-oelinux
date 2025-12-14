@@ -105,6 +105,7 @@ run_victor() {
 }
 
 do_compile[pseudo] = "0"
+do_compile[network] = "1"
 
 do_compile() {
     cd "${EXTERNALSRC}"
