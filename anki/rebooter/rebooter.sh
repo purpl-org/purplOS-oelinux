@@ -45,13 +45,6 @@ exit_if_too_late(){
   [ $(now_secs) -gt $LATEST ] && { echo "too late"; fail "$1"; exit 1; }
 }
 
-ps_list(){
-  for pid in /proc/[0-9]*; do
-    cmd=$(tr '\0' ' ' < "$pid/cmdline" 2>/dev/null)
-    [ -n "$cmd" ] && echo "$cmd"
-  done
-}
-
 os_update_pending(){
   [ -e /run/update-engine/done ]
 }
@@ -63,9 +56,12 @@ inhibitors(){
   gov_file="/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
   if [ -r "$gov_file" ]; then
     gov=$(cat "$gov_file")
-    [[ "$gov" != powersave* && "$gov" != userspace* ]] || list+=(powersave)
+    if [[ "$gov" != "powersave" && "$gov" != "userspace" ]]; then
+       list+=(powersave)
+    fi
   fi
-  ps_list | grep -q "$UPDATER_PROCESS" && list+=("$UPDATER_PROCESS")
+  PSLIST="$(ps -aux)"
+  echo "${PSLIST}" | grep -q "$UPDATER_PROCESS" && list+=("$UPDATER_PROCESS")
   echo "${list[@]}"
 }
 

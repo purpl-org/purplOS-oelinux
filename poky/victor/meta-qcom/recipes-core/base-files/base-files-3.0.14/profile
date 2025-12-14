@@ -2,7 +2,7 @@
 # and Bourne compatible shells (bash(1), ksh(1), ash(1), ...).
 
 PATH="/usr/local/bin:/usr/bin:/bin"
-EDITOR="vi"			# needed for packages like cron, git-commit
+EDITOR="vim"			# needed for packages like cron, git-commit
 [ "$TERM" ] || TERM="vt100"	# Basic terminal capab. For screen etc.
 
 # Add /sbin & co to $PATH for the root user
@@ -20,6 +20,11 @@ if [ -d /etc/profile.d ]; then
 	unset i
 fi
 
+
+if [ ! -f /data/.config/ ]; then
+	mkdir -p /data/.config/
+fi
+
 # Make sure we are on a serial console (i.e. the device used starts with
 # /dev/tty[A-z]), otherwise we confuse e.g. the eclipse launcher which tries do
 # use ssh
@@ -35,13 +40,17 @@ function reboot() {
 }
 
 alias ls="ls --color=auto"
+alias ll='ls -alF --color=auto'
+alias la='ls -A --color=auto'
+alias l='ls -CF --color=auto'
 alias btop="btop --force-utf"
 alias grep='grep --color=auto'
 alias recovery="/sbin/reboot recovery & exit"
-alias neofetch="neofetch --no_config --ascii_colors 2 --ascii /etc/vector-ascii"
+alias neofetch="neofetch --ascii_colors 2 --ascii /etc/vector-ascii"
 alias voff="voff && exit"
 alias mrw="mount -o rw,remount /"
 alias stop_robot="systemctl stop anki-robot.target"
 alias start_robot="systemctl start anki-robot.target"
+alias vi='vim'
 
 umask 022
