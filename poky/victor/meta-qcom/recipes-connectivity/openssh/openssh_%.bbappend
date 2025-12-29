@@ -20,9 +20,9 @@ EXTRA_OECONF:append = " ${@bb.utils.contains('DISTRO_FEATURES', 'selinux', '--wi
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 do_install:append () {
     sed -i -e 's:#PermitRootLogin yes:PermitRootLogin yes:' ${UNPACKDIR}/sshd_config ${D}${sysconfdir}/ssh/sshd_config
-    sed -i -e 's:#PasswordAuthentication yes:PasswordAuthentication no:' ${UNPACKDIR}/sshd_config ${D}${sysconfdir}/ssh/sshd_config
+    sed -i -e 's:#PasswordAuthentication yes:PasswordAuthentication yes:' ${UNPACKDIR}/sshd_config ${D}${sysconfdir}/ssh/sshd_config
     sed -i -e 's:#PermitRootLogin yes:PermitRootLogin yes:' ${UNPACKDIR}/sshd_config ${D}${sysconfdir}/ssh/sshd_config_readonly
-    sed -i -e 's:#PasswordAuthentication yes:PasswordAuthentication no:' ${UNPACKDIR}/sshd_config ${D}${sysconfdir}/ssh/sshd_config_readonly
+    sed -i -e 's:#PasswordAuthentication yes:PasswordAuthentication yes:' ${UNPACKDIR}/sshd_config ${D}${sysconfdir}/ssh/sshd_config_readonly
     sed -i '$a    StrictHostKeyChecking no' ${UNPACKDIR}/ssh_config ${D}${sysconfdir}/ssh/ssh_config
     sed -i '$a    UserKnownHostsFile /dev/null' ${UNPACKDIR}/ssh_config ${D}${sysconfdir}/ssh/ssh_config
     sed -i -e 's:.ssh/authorized_keys: .ssh/authorized_keys /etc/ssh/authorized_keys:' ${UNPACKDIR}/sshd_config ${D}${sysconfdir}/ssh/sshd_config
