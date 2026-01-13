@@ -7,7 +7,7 @@
 	branch = walnascar
 [submodule "anki/wired"]
 	path = anki/wired
-	url = https://github.com/purpl-org/wired
+	url = https://github.com/os-vector/wired
 [submodule "anki/vic-cloudless"]
 	path = anki/vic-cloudless
 	url = https://github.com/kercre123/vic-cloudless
