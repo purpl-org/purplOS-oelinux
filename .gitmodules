@@ -17,3 +17,7 @@
 [submodule "poky/openembedded-core"]
 	path = poky/openembedded-core
 	url = https://github.com/openembedded/openembedded-core.git
+[submodule "poky/victor/meta-vicos-mods/recipes-extended/purplpkg"]
+	path = poky/victor/meta-vicos-mods/recipes-extended/purplpkg
+	url = https://github.com/purpl-org/purplpkg
+	branch = purplOS-oelinux
