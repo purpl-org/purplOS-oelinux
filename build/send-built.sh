@@ -15,38 +15,35 @@ eval `ssh-agent`
 ssh-add "$KEY_PATH"
 
 echo Touch auto update inhibitor
-ssh -p 23 root@froggitti.net 'touch /wire/otas/dnar && wall Inhibitor added.'
+ssh  root@websetup.froggitti.net 'touch /servers/drive2/froggitti-net/ota-purpl.skittl.net/otas/dnar'
 sleep 1s
 
 echo Remove old latest file
-ssh -p 23 root@froggitti.net 'rm /wire/otas/latest && wall Latest file removed.'
+ssh  root@websetup.froggitti.net 'rm /servers/drive2/froggitti-net/ota-purpl.skittl.net/otas/latest'
 sleep 1s
 
 echo Make new latest file
-ssh -p 23 root@froggitti.net 'touch /wire/otas/latest && wall Latest file created.'
+ssh  root@websetup.froggitti.net 'touch /servers/drive2/froggitti-net/ota-purpl.skittl.net/otas/latest'
 sleep 1s
 
 echo Echo new version number to new latest file
-ssh -p 23 root@froggitti.net "echo 0.3.2.$INCREMENT >> /wire/otas/latest && wall Latest file updated."
+ssh  root@websetup.froggitti.net "echo 0.3.3.$INCREMENT > /servers/drive2/froggitti-net/ota-purpl.skittl.net/otas/latest"
 sleep 1s
 
 echo Copy Dev OTA
-scp -P 23 ~/vector/purplOS-oelinux/_build/vicos-0.3.2."$INCREMENT"d.ota root@froggitti.net:/wire/otas/full/dev/0.3.2."$INCREMENT".ota
+scp  _build/vicos-0.3.3."$INCREMENT"d.ota root@websetup.froggitti.net:/servers/drive2/froggitti-net/v.skittl.net/site/firmware/purplOS\ DEV/0.3.3."$INCREMENT".ota
 
 echo Copy OSKR OTA
-scp -P 23 ~/vector/purplOS-oelinux/_build/vicos-0.3.2."$INCREMENT"oskr.ota root@froggitti.net:/wire/otas/full/oskr/0.3.2."$INCREMENT".ota
+scp  _build/vicos-0.3.3."$INCREMENT"oskr.ota root@websetup.froggitti.net:/servers/drive2/froggitti-net/v.skittl.net/site/firmware/purplOS\ OSKR/0.3.3."$INCREMENT".ota
 
-echo Copy Dev OTA to a never-changing URL
-ssh -p 23 root@froggitti.net "cp /wire/otas/full/dev/0.3.2."$INCREMENT".ota /wire/otas/full/latest/dev.ota"
-	
-echo Copy OSKR OTA to a never-changing URL
-ssh -p 23 root@froggitti.net "cp /wire/otas/full/oskr/0.3.2."$INCREMENT".ota /wire/otas/full/latest/oskr.ota"
+#echo Copy Dev OTA to a never-changing URL
+#ssh  root@websetup.froggitti.net "cp /servers/drive2/froggitti-net/v.skittl.net/site/firmware/purplOS\ DEV//0.3.3."$INCREMENT".ota /servers/drive2/froggitti-net/ota-purpl.skittl.net/otas/full/latest/dev.ota"
+
+#echo Copy OSKR OTA to a never-changing URL
+#ssh  root@websetup.froggitti.net "cp /servers/drive2/froggitti-net/ota-purpl.skittl.net/otas/full/oskr/0.3.3."$INCREMENT".ota /servers/drive2/froggitti-net/ota-purpl.skittl.net/otas/full/latest/oskr.ota"
 
 echo Remove auto update inhibitor
-ssh -p 23 root@froggitti.net 'rm /wire/otas/dnar'
+ssh  root@websetup.froggitti.net 'rm /servers/drive2/froggitti-net/ota-purpl.skittl.net/otas/dnar'
 sleep 1s
 
-ssh -p 23 root@froggitti.net 'cat /wire/otas/latest'
-
 echo Done.
-
