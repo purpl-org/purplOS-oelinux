@@ -14,9 +14,12 @@ cd ../../
 cd anki/victor 
 git pull --no-recurse-submodules origin main
 cd ../../
+cd poky/victor/meta-vicos-mods/recipes-extended/purplpkg
+git pull origin purplOS-oelinux
+cd ../../../../
 
 git add .
 
-git commit -m "Update Submodules (Performed by automated script)"
+git commit -m "Update Submodules (Performed by update.sh)"
 
 git push origin main
