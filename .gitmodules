@@ -18,7 +18,7 @@
 	path = poky/victor/meta-vicos-mods/recipes-extended/purplpkg
 	url = https://github.com/purpl-org/purplpkg
 	branch = purplOS-oelinux
-[submodule "openembedded-core"]
-	path = openembedded-core
+[submodule "poky/openembedded-core"]
+	path = poky/openembedded-core
 	url = https://github.com/openembedded/openembedded-core.git
 	branch = whinlatter
