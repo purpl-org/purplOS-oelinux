@@ -1,6 +1,6 @@
 [submodule "anki/victor"]
 	path = anki/victor
-	url = https://github.com/os-vector/wire-os-victor
+	url = https://github.com/purpl-org/purplOS
 [submodule "poky/meta-openembedded"]
 	path = poky/meta-openembedded
 	url = https://github.com/openembedded/meta-openembedded
