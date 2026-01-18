@@ -59,6 +59,34 @@ function check_sign_ota() {
 	fi
 }
 
+function check_submodules() {
+	BAD_SUBMODULE=0
+	if [[ ! -d anki/victor/engine ]]; then
+		errorMsg "The anki/victor submodule doesn't exist."
+		BAD_SUBMODULE=1
+	fi
+	if [[ ! -d poky/openembedded-core/meta ]]; then
+		errorMsg "The poky/openembedded-core submodule doesn't exist."
+		BAD_SUBMODULE=1
+	fi
+	if [[ ! -d poky/meta-openembedded/meta-oe ]]; then
+		errorMsg "The poky/meta-openembedded submodule doesn't exist."
+		BAD_SUBMODULE=1
+	fi
+	if [[ ! -d external/purplpkg/bash ]]; then
+		errorMsg "The external/purplpkg submodule doesn't exist."
+		BAD_SUBMODULE=1
+	fi
+	if [[ ! -d anki/wired/webroot ]]; then
+		errorMsg "The anki/wired submodule doesn't exist."
+		BAD_SUBMODULE=1
+	fi
+	if [[ ${BAD_SUBMODULE} == 1 ]]; then
+		errorMsg "Please configure your submodules properly."
+		exit 1
+	fi
+}
+
 function are_you_wire() {
 	if [[ "${AUTO_UPDATE}" != "1" ]]; then
 		echo "Are you $CREATOR?"
@@ -129,6 +157,8 @@ if [[ "${AUTO_UPDATE}" == "1" ]]; then
 	echo "Build will auto-update (env var set)"
 	AUTO_UPDATE=1
 fi
+
+check_submodules
 
 is_victor_there_and_compatible
 

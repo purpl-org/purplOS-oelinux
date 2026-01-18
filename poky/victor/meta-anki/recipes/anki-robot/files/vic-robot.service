@@ -3,8 +3,8 @@ Description=Victor robot daemon
 SourcePath=/anki/bin/vic-robot
 PartOf=anki-robot.target
 
-Wants=vic-crashuploader.service
-After=vic-crashuploader.service
+Wants=vic-init.service
+After=vic-init.service
 
 [Service]
 PermissionsStartOnly=true

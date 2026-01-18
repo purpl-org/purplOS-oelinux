@@ -67,6 +67,9 @@ IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'procps', d)}"
 IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'net-tools', d)}"
 IMAGE_INSTALL += "${@oe.utils.conditional('USER_BUILD', '1', '', 'util-linux-dmesg', d)}"
 
+# skittle
+IMAGE_INSTALL += "purplpkg"
+
 # want some debug tools?
 #IMAGE_INSTALL += "gdb"
 #IMAGE_INSTALL += "strace"
