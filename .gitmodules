@@ -4,7 +4,7 @@
 [submodule "poky/meta-openembedded"]
 	path = poky/meta-openembedded
 	url = https://github.com/openembedded/meta-openembedded
-	branch = walnascar
+	branch = whinlatter
 [submodule "anki/wired"]
 	path = anki/wired
 	url = https://github.com/os-vector/wired
