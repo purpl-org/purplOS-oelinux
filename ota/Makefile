@@ -32,7 +32,7 @@ OTAKEY ?= ota_prod.key
 OTAPASS ?= file:ota_test.pass
 OTAENC ?= 1
 ANKIDEV ?= 1
-REBOOT_AFTER_INSTALL ?= 0
+REBOOT_AFTER_INSTALL ?= 1
 
 ifeq ($(ANKIDEV), 0)
  MANIFEST_VERSION = 0.9.2

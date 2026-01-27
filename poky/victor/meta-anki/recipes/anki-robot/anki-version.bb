@@ -23,7 +23,7 @@ do_install:append () {
     if [ -z ${ANKI_BUILD_REVISION} ]; then
         GIT=`which git`
         if [ ! -z $GIT ]; then
-            ANKI_BUILD_REVISION="something"
+            ANKI_BUILD_REVISION="purpl"
         else
             ANKI_BUILD_REVISION=""
         fi
