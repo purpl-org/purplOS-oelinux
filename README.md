@@ -51,10 +51,6 @@ cd purplOS-oelinux
 # example: ./build/build.sh -bt dev -v 1
 # <build-increment> is what the last number of the version string will be - if it's 1, it will be 0.3.2.1.ota
 ```
-
-<<<<<<< HEAD
-##  Donate to Wire, who is making this possible
-=======
 ### Where is my OTA?
 
 `./_build/3.0.1.1.ota`
@@ -67,11 +63,7 @@ cd purplOS-oelinux
 
 - I try to make it so whenever changes are made, you don't need to do a full rebuild; however, due to this being synced up to poky's `master` branch, behavior can be unpredictable. **Due to this, I recommend doing a full rebuild each time.** You can clean your build directory by running `sudo rm -rf poky/build/tmp-glibc poky/build/cache poky/build/sstate-cache poky/build/downloads`.
 
-##  Donate
-
-If you want to :P
->>>>>>> 0c407542df72b3b34529d2ac1aa7e103c3287b1d
-
+##  Donate to Wire, who is making this possible
 [![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/kercre123)
 
 ## Differences compared to normal Vector FW
