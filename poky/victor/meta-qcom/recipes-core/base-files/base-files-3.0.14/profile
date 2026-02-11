@@ -52,5 +52,6 @@ alias mrw="mount -o rw,remount /"
 alias stop_robot="systemctl stop anki-robot.target"
 alias start_robot="systemctl start anki-robot.target"
 alias vi='vim'
+alias ppkg='purplpkg'
 
 umask 022
