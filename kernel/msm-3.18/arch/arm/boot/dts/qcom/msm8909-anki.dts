@@ -18,7 +18,7 @@
 #include "msm8909-pm8916-camera.dtsi"
 
 / {
-	model = "ANKI Vector Headboard";
+	model = "Anki/DDL Vector";
 	compatible = "qcom,apq8009-mtp", "qcom,apq8009", "qcom,mtp";
 	qcom,msm-id = <265 2>;
 	qcom,board-id= <8 0x8>;   // XXX - this should be our own, right?
